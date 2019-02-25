@@ -10,7 +10,9 @@ namespace DemoApp1
             Console.WriteLine($"Для ввода доступны значения не менее {float.MinValue} и не более {float.MaxValue}");
             Console.WriteLine("Числа с плавающей точкой можно вводить с разделителем \".\" или \",\" ");
             Console.WriteLine("Введите первое число");
-            float firstOperand = float.Parse(Console.ReadLine().Replace(".",","));
+            float firstOperand = float.Parse(Console.ReadLine().Replace(".", ","));
+            Console.WriteLine("Введите второе число");
+            float secondOperand = float.Parse(Console.ReadLine().Replace(".", ","));
             Console.WriteLine("Введите символ, соответствующий арифметической операции из списка:");
             Console.WriteLine("сложение: +");
             Console.WriteLine("вычитание: -");
@@ -19,8 +21,6 @@ namespace DemoApp1
             Console.WriteLine("возведение в степень: ^");
             Console.WriteLine("остаток от деления : %");
             char mathOperationType = char.Parse(Console.ReadLine());
-            Console.WriteLine("Введите второе число");
-            float secondOperand = float.Parse(Console.ReadLine());
             switch (mathOperationType) {
                 case '+':
                     float result = firstOperand + secondOperand;
