@@ -6,6 +6,10 @@ namespace DemoApp1
     {
         static void Main(string[] args)
         {
+            Console.InputEncoding = System.Text.Encoding.Unicode;
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
+            System.Threading.Thread.CurrentThread.CurrentCulture=System.Globalization.CultureInfo.InvariantCulture;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.InvariantCulture;
             Console.WriteLine("Аннотация:");
             Console.WriteLine($"Для ввода доступны значения не менее {float.MinValue} и не более {float.MaxValue}");
             Console.WriteLine("Числа с плавающей точкой можно вводить с разделителем \".\" или \",\" ");
