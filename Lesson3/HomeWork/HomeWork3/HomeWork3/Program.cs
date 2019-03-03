@@ -1,5 +1,4 @@
 ﻿using System;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace HomeWork3
 {
@@ -11,38 +10,38 @@ namespace HomeWork3
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
             System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.InvariantCulture;
-            string[] namearr = new string[3];
-            int[] agearr = new int[3];
+            string[] userNameArray = new string[3];
+            int[] userAgeArray = new int[3];
             int i;
-            for (i = 0; i < namearr.Length; i++)
+            for (i = 0; i < userNameArray.Length; i++)
             {
                 Console.WriteLine($"Write name of the person {i + 1}");
-                namearr[i]=Console.ReadLine();
-                foreach (char c in namearr[i])
+                userNameArray[i]=Console.ReadLine();
+                foreach (char c in userNameArray[i])
                 {
-                    if (Char.IsNumber(c))
+                    if (Char.IsLetter(c))
                     {
-                        Console.WriteLine(new FormatException("the value of parameter name must not contain number"));
+                        Console.WriteLine(new FormatException("The value of parameter name must not contain number"));
                         Console.ReadKey();
-                        Environment.Exit(0);
+                        Environment.Exit(13);
                     }
                 }
-            Console.WriteLine($"Write age of the person {namearr[i]}");
-                if (int.TryParse(Console.ReadLine(), out int parseResult))
+            Console.WriteLine($"Write age of the person {userNameArray[i]}");
+                if (int.TryParse(Console.ReadLine(), out int usernameParseResult))
                 {
-                    agearr[i] = parseResult;
+                    userAgeArray[i] = usernameParseResult;
                 }
                 else
                 {
-                Console.WriteLine(new FormatException("the value of parameter age must be integer"));
-                Console.ReadKey();
-                Environment.Exit(0);
+                    Console.WriteLine(new FormatException("The value of parameter age must be integer"));
+                    Console.ReadKey();
+                    Environment.Exit(13);
                 }
             }
             Console.WriteLine(Environment.NewLine);
             for (i = 0; i < 3; i++)
             {
-                Console.WriteLine($"Name: {namearr[i]}, age in 4 years: {agearr[i] + 4}");
+                Console.WriteLine($"Name: {userNameArray[i]}, age in 4 years: {userAgeArray[i] + 4}");
             }
             Console.ReadKey();
         }
