@@ -6,7 +6,11 @@ namespace ClassWork
 	{
 		static void Main(string[] args)
 		{
-			var marks = new[]
+            Console.InputEncoding = System.Text.Encoding.Unicode;
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
+            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.InvariantCulture;
+            var marks = new[]
 			{
 			new[] {2,3,3,2,3},
 			new[] {2,4,5,3},

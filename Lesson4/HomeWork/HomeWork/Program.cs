@@ -5,9 +5,9 @@ namespace HomeWork
     [Flags]
     enum ContainerVolume
     {
-        OneLiter = 0x1,         //00000001
-        FiveLiters = 0x1 << 1,  //00000010
-        TwentyLiters = 0x1 << 2 //00000100
+        OneLiter = 0x1,         
+        FiveLiters = 0x1 << 1,  
+        TwentyLiters = 0x1 << 2 
     }
     class Program
     {
