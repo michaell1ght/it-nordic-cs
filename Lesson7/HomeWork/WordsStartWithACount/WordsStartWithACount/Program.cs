@@ -10,22 +10,22 @@ namespace WordsStartWithACount
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
             System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.InvariantCulture;
-            const int WORDSQUANTITY = 2;
+            const int INPUTWORDSQUANTITY = 2;
             int i = 0;
             int count = 0;
             string outputPhrase = "количество слов начинающихся с русской буквы буквы 'А'";
             string inputString = null;
             string[] inputStringArray = { null };
-            const char SEPARATOR = ' ';
+            const char STRINGTOARRAYSEPARATOR = ' ';
             Console.WriteLine($"Данное приложение считает {outputPhrase} ");
             Console.WriteLine("введите строку");
             inputString = Console.ReadLine();
-            inputStringArray = inputString.Split(SEPARATOR);
-            while (String.IsNullOrWhiteSpace(inputString) == true && inputStringArray.Length < WORDSQUANTITY)
+            inputStringArray = inputString.Split(STRINGTOARRAYSEPARATOR);
+            while (String.IsNullOrWhiteSpace(inputString) == true && inputStringArray.Length < INPUTWORDSQUANTITY)
             {
                 Console.WriteLine("Ошибка! Нужно ввести хотя бы 2 слова. Попробуйте ещё раз");
                 inputString = Console.ReadLine();
-                inputStringArray = inputString.Split(SEPARATOR);
+                inputStringArray = inputString.Split(STRINGTOARRAYSEPARATOR);
             }
             for (i = 0; i < inputStringArray.Length; i++)
             {
