@@ -7,15 +7,16 @@ namespace IndividualNumbersInNaturalNumberCount
     {
         static void Main(string[] args)
         {
+            
             Console.InputEncoding = System.Text.Encoding.Unicode;
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
             System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.InvariantCulture;
 
             int naturalNumber =0;
-            var notNaturalNumberCollection = new HashSet<int> () { 1, 3, 5, 7, 9 };
-            int IndividualNumberscount = 0;
-            int currentNaturalNumberIntegerPart = 0;
+            var oddDigitsCollection = new HashSet<int> () { 1, 3, 5, 7, 9 };
+            int evenDigitsCount = 0;
+            int currentEvenDigitIntegerPart = 0;
             Console.WriteLine("Введите натуральное число:");
 
             try
@@ -23,12 +24,12 @@ namespace IndividualNumbersInNaturalNumberCount
                 naturalNumber = int.Parse(Console.ReadLine());
                 if (naturalNumber > 0)
                 {
-                    currentNaturalNumberIntegerPart = naturalNumber;
-                    while (currentNaturalNumberIntegerPart > 0)
+                    currentEvenDigitIntegerPart = naturalNumber;
+                    while (currentEvenDigitIntegerPart > 0)
                     {
-                        if (!notNaturalNumberCollection.Contains((currentNaturalNumberIntegerPart % 10)))
-                            IndividualNumberscount++;
-                        currentNaturalNumberIntegerPart /= 10;
+                        if (!oddDigitsCollection.Contains((currentEvenDigitIntegerPart % 10)))
+                            evenDigitsCount++;
+                        currentEvenDigitIntegerPart /= 10;
                     }
                 }
                 else
@@ -37,7 +38,7 @@ namespace IndividualNumbersInNaturalNumberCount
                     Console.ReadKey();
                     throw new ArgumentOutOfRangeException();
                 }
-                Console.WriteLine($"Количество чётных цифр числа {naturalNumber} равно { IndividualNumberscount} ");
+                Console.WriteLine($"Количество чётных цифр числа {naturalNumber} равно { evenDigitsCount} ");
                 Console.ReadKey();
             }
 
