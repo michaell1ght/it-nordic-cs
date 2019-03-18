@@ -11,6 +11,7 @@ namespace Rextester
             int summaryDayMark = 0;
             double averageDayMark = 0;
             double summaryAverageWeekMark = 0;
+            const string outputText = "The average mark for";
             int markCount=0;
             var marks = new[]
             {
@@ -24,7 +25,7 @@ namespace Rextester
             {
                 if (marks[i] == null)
                 {
-                    Console.WriteLine(" The average mark for day {0} is N/A ", i +1 );
+                    Console.WriteLine("{0} day {1} is N/A ", outputText, i +1 );
                     i++;
                 }
                 for (j = 0; j < marks[i].Length; j++)
@@ -38,7 +39,7 @@ namespace Rextester
                 Console.WriteLine(" The average mark for day {0} is {1} ", i + 1, averageDayMark);
             }
             summaryAverageWeekMark = (double)summaryAverageWeekMark / markCount;
-            Console.WriteLine(" The average mark for all the week is {0:0.#}", summaryAverageWeekMark);
+            Console.WriteLine("{0} all the week is {0:0.#}", outputText, summaryAverageWeekMark);
             Console.ReadKey();
         }
     }

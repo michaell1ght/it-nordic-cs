@@ -16,7 +16,7 @@ namespace IndividualNumbersInNaturalNumberCount
             int naturalNumber =0;
             var oddDigitsCollection = new HashSet<int> () { 1, 3, 5, 7, 9 };
             int evenDigitsCount = 0;
-            int currentEvenDigitIntegerPart = 0;
+            int integerEvenDigitPart = 0;
             Console.WriteLine("Введите натуральное число:");
 
             try
@@ -24,20 +24,22 @@ namespace IndividualNumbersInNaturalNumberCount
                 naturalNumber = int.Parse(Console.ReadLine());
                 if (naturalNumber > 0)
                 {
-                    currentEvenDigitIntegerPart = naturalNumber;
-                    while (currentEvenDigitIntegerPart > 0)
+                    integerEvenDigitPart = naturalNumber;
+                    while (integerEvenDigitPart > 0)
                     {
-                        if (!oddDigitsCollection.Contains((currentEvenDigitIntegerPart % 10)))
+                        if (!oddDigitsCollection.Contains((integerEvenDigitPart % 10)))
                             evenDigitsCount++;
-                        currentEvenDigitIntegerPart /= 10;
+                        integerEvenDigitPart /= 10;
                     }
                 }
+
                 else
                 {
                     Console.WriteLine("input value is not a number more than zero");
                     Console.ReadKey();
                     throw new ArgumentOutOfRangeException();
                 }
+
                 Console.WriteLine($"Количество чётных цифр числа {naturalNumber} равно { evenDigitsCount} ");
                 Console.ReadKey();
             }
@@ -47,6 +49,7 @@ namespace IndividualNumbersInNaturalNumberCount
                 Console.WriteLine($"{e.GetType()} , {e.Message}");
                 Console.ReadKey();
             }
+
             catch (OverflowException e)
             {
                 Console.WriteLine($"{e.GetType()} , {e.Message}");

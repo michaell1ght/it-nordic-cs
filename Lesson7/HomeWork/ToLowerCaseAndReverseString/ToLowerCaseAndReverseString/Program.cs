@@ -17,7 +17,7 @@ namespace ToLowerCaseAndReverseString
             inputString = Console.ReadLine();
 
             while (String.IsNullOrWhiteSpace(inputString)
-                || IsUnPrintableLiteralsInStringCheck(inputString)
+                || IsLetterOrDigitIgnoreWhitespaceCheck(inputString)
                 || inputString.ToCharArray().Length < inputStringLength == true)
             {
                 Console.WriteLine("Ошибка! Нужно ввести 2 числа или 2 буквы. Попробуйте ещё раз");
@@ -30,18 +30,18 @@ namespace ToLowerCaseAndReverseString
                     reverseSymbolsArray = inputStringArray[i].ToCharArray();
                     Array.Reverse(reverseSymbolsArray);
                     string reverseString = new string(reverseSymbolsArray);
-                    Console.Write("{1} ",reverseString);
+                Console.Write($"{reverseString} ");
                 }
                 Console.ReadKey();
         }
 
-        public static bool IsUnPrintableLiteralsInStringCheck(string someString)
+        public static bool IsLetterOrDigitIgnoreWhitespaceCheck(string someString)
         {
             bool result = false;
             char[] inputStringToCharArray = someString.ToCharArray();
             for (int j = 0; j < inputStringToCharArray.Length; j++)
             {
-                    if (!Char.IsLetterOrDigit(inputStringToCharArray[j]))
+                    if (!Char.IsLetterOrDigit(inputStringToCharArray[j]) && !Char.IsWhiteSpace(inputStringToCharArray[j]))
                     {
                         result = true;
                     }

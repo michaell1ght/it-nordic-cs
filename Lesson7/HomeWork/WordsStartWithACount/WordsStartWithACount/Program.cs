@@ -10,31 +10,31 @@ namespace WordsStartWithACount
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
             System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.InvariantCulture;
-            const int INPUTWORDSQUANTITY = 2;
+            const int inputWordsMinimalQuantity = 2;
             int i = 0;
             int count = 0;
             string outputPhrase = "количество слов начинающихся с русской буквы буквы 'А'";
             string inputString = null;
             string[] inputStringArray = { null };
-            const char STRINGTOARRAYSEPARATOR = ' ';
+            const char stringSeparator = ' ';
             Console.WriteLine($"Данное приложение считает {outputPhrase} ");
             Console.WriteLine("введите строку");
             inputString = Console.ReadLine();
-            inputStringArray = inputString.Split(STRINGTOARRAYSEPARATOR);
-            while (String.IsNullOrWhiteSpace(inputString) == true && inputStringArray.Length < INPUTWORDSQUANTITY)
+            inputStringArray = inputString.Split(stringSeparator);
+            while (String.IsNullOrWhiteSpace(inputString) == true || inputStringArray.Length < inputWordsMinimalQuantity)
             {
                 Console.WriteLine("Ошибка! Нужно ввести хотя бы 2 слова. Попробуйте ещё раз");
                 inputString = Console.ReadLine();
-                inputStringArray = inputString.Split(STRINGTOARRAYSEPARATOR);
+                inputStringArray = inputString.Split(stringSeparator);
             }
-            for (i = 0; i < inputStringArray.Length; i++)
+            foreach (string stringArrayElement in inputStringArray)
             {
-                if (inputStringArray[i].StartsWith("а" ,true, System.Threading.Thread.CurrentThread.CurrentCulture))
+                if (stringArrayElement.StartsWith("а" ,true, System.Threading.Thread.CurrentThread.CurrentCulture))
                 {
-                    count++;
+                    i++;
                 }
             }
-            Console.WriteLine($"{SetFirstStringLetterToUpperCase(outputPhrase)} = { count}");
+            Console.WriteLine($"{SetFirstStringLetterToUpperCase(outputPhrase)} = {i}");
             Console.ReadKey();
         }
         public static string SetFirstStringLetterToUpperCase(string someString)

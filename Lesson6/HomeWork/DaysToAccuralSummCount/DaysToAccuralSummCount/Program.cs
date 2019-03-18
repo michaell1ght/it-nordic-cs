@@ -19,7 +19,10 @@ namespace DaysToAccuralSummCount
 
             Console.WriteLine("Введите сумму первоначального взноса в рублях:");
             if (double.TryParse(Console.ReadLine(), out double startInvestitionInput) && startInvestitionInput > 0)
+            {
                 startInvestition = startInvestitionInput;
+            }
+
             else
             {
                 Console.WriteLine("input value is not a number more than zero");
@@ -29,7 +32,10 @@ namespace DaysToAccuralSummCount
 
             Console.WriteLine("Введите ежедневный процент дохода в виде десятичной дроби:");
             if (double.TryParse(Console.ReadLine(), out double percentInput) && percentInput > 0 && percentInput < 1)
+            {
                 percent = percentInput;
+            }
+
             else
             {
                 Console.WriteLine("input value is not a number more than zero and less by one");
@@ -39,7 +45,10 @@ namespace DaysToAccuralSummCount
 
             Console.WriteLine("Введите желаемую сумму накопления в рублях:");
             if (double.TryParse(Console.ReadLine(), out double expectedSummInput) && expectedSummInput > 0)
+            {
                 expectedSumm = expectedSummInput;
+            }
+
             else
             {
                 Console.WriteLine("input value is not a number more than zero");
@@ -53,6 +62,7 @@ namespace DaysToAccuralSummCount
                 currentSumm += currentSumm * percent;
                 daysCount++;
             }
+
             Console.WriteLine($"Необходимое количество дней для накопления желаемой суммы: {daysCount}");
             Console.ReadKey();
         }
