@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace IndividualNumbersInNaturalNumberCount
 {
@@ -12,6 +13,7 @@ namespace IndividualNumbersInNaturalNumberCount
             System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.InvariantCulture;
 
             int naturalNumber =0;
+            var notNaturalNumberCollection = new HashSet<int> () { 1, 3, 5, 7, 9 };
             int IndividualNumberscount = 0;
             int currentNaturalNumberIntegerPart = 0;
             Console.WriteLine("Введите натуральное число:");
@@ -24,7 +26,7 @@ namespace IndividualNumbersInNaturalNumberCount
                     currentNaturalNumberIntegerPart = naturalNumber;
                     while (currentNaturalNumberIntegerPart > 0)
                     {
-                        if ((currentNaturalNumberIntegerPart % 10) % 2 == 0)
+                        if (!notNaturalNumberCollection.Contains((currentNaturalNumberIntegerPart % 10)))
                             IndividualNumberscount++;
                         currentNaturalNumberIntegerPart /= 10;
                     }
