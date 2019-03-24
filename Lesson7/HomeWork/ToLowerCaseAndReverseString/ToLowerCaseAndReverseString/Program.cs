@@ -48,7 +48,6 @@ namespace ToLowerCaseAndReverseString
                     {
                         result = true;
                     }
-            
             }
             
             return result;
