@@ -6,12 +6,14 @@ namespace ToLowerCaseAndReverseString
     {
         public static void Main(string[] args)
         {
+            const char stringToArraySeparator = ' ';
+            const int inputStringLength= 2;
+            
             int i = 0;
             char[] reverseSymbolsArray;
             string inputString = null;
             string[] inputStringArray = {null};
-            const char stringToArraySeparator = ' ';
-            const int inputStringLength= 2;
+
             Console.WriteLine("Данное приложение приводит строку к нижнему регистру и записывает введённую строку в обратном порядке");
             Console.WriteLine("Введите строку");
             inputString = Console.ReadLine();
@@ -32,6 +34,7 @@ namespace ToLowerCaseAndReverseString
                     string reverseString = new string(reverseSymbolsArray);
                 Console.Write($"{reverseString} ");
                 }
+                
                 Console.ReadKey();
         }
 
@@ -45,7 +48,9 @@ namespace ToLowerCaseAndReverseString
                     {
                         result = true;
                     }
+            
             }
+            
             return result;
         }
     }
