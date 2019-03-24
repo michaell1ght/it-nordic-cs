@@ -7,15 +7,14 @@ namespace WordsStartWithACount
         static void Main(string[] args)
         {
             const char stringSeparator = ' ';
+            const int inputWordsMinimalQuantity = 2;
 
             Console.InputEncoding = System.Text.Encoding.Unicode;
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
             System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.InvariantCulture;
-            const int inputWordsMinimalQuantity = 2;
             
-            int i = 0;
-            int count = 0;
+            int wordsStartWithACount = 0;
             string outputPhrase = "количество слов начинающихся с русской буквы буквы 'А'";
             string inputString = null;
             string[] inputStringArray = { null };
@@ -36,11 +35,11 @@ namespace WordsStartWithACount
             {
                 if (stringArrayElement.StartsWith("а" ,true, System.Threading.Thread.CurrentThread.CurrentCulture))
                 {
-                    i++;
+                    wordsStartWithACount++;
                 }
             }
             
-            Console.WriteLine($"{SetFirstStringLetterToUpperCase(outputPhrase)} = {i}");
+            Console.WriteLine($"{SetFirstStringLetterToUpperCase(outputPhrase)} = {wordsStartWithACount}");
             Console.ReadKey();
         }
         
