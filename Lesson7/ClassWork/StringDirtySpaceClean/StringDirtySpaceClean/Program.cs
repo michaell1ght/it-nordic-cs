@@ -12,24 +12,25 @@ namespace StringDirtySpaceClean
             System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
             System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.InvariantCulture;
 
-            string[] inputString = null;
-            StringBuilder sbInputString = new StringBuilder();
+            string[] inputStringArray = null;
+            StringBuilder formattedString = new StringBuilder();
             Console.WriteLine("Это приложение удалит лишние пробелы в строке и напишет второе слово заглавными буквами");
             Console.WriteLine("Введите строку:");
-            inputString = Console.ReadLine().ToLower().Split(" ", StringSplitOptions.RemoveEmptyEntries);
+            inputStringArray = Console.ReadLine().ToLower().Split(" ", StringSplitOptions.RemoveEmptyEntries);
 
-            for (int i = 0; i< inputString.Length; i++)
+            for (int i = 0; i< inputStringArray.Length; i++)
             {
                 if (i==1)
                 {
-                    inputString[i]=inputString[i].ToUpper();
+                    inputStringArray[i]=inputStringArray[i].ToUpper();
                 }
 
-                    sbInputString.Insert(sbInputString.Length, inputString[i]);
-                    sbInputString.Insert(sbInputString.Length, " ");
+                    formattedString.Insert(formattedString.Length, inputStringArray[i]);
+                    formattedString.Insert(formattedString.Length, " ");
             }
-
-            Console.WriteLine(sbInputString);
+            
+            formattedString.Remove(formattedString.Length -1, 1);
+            Console.WriteLine(formattedString);
             Console.ReadKey();
         }
     }
