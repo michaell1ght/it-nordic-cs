@@ -7,6 +7,7 @@ namespace StringDirtySpaceClean
     {
         static void Main(string[] args)
         {
+            const int secondWordIndex = 1;
             Console.InputEncoding = System.Text.Encoding.Unicode;
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
@@ -19,7 +20,7 @@ namespace StringDirtySpaceClean
 
             for (int i = 0; i< inputStringArray.Length; i++)
             {
-                if (i==1)
+                if (i==secondWordIndex)
                 {
                     inputStringArray[i]=inputStringArray[i].ToUpper();
                 }
