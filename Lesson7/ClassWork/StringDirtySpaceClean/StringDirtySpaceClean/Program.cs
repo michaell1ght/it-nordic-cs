@@ -12,11 +12,10 @@ namespace StringDirtySpaceClean
             System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
             System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.InvariantCulture;
 
-            string[] inputStringArray = null;
-            StringBuilder formattedString = new StringBuilder();
             Console.WriteLine("Это приложение удалит лишние пробелы в строке и напишет второе слово заглавными буквами");
             Console.WriteLine("Введите строку:");
-            inputStringArray = Console.ReadLine().ToLower().Split(" ", StringSplitOptions.RemoveEmptyEntries);
+            string[] inputStringArray = Console.ReadLine().ToLower().Split(" ", StringSplitOptions.RemoveEmptyEntries);
+            StringBuilder formattedString = new StringBuilder();
 
             for (int i = 0; i< inputStringArray.Length; i++)
             {
