@@ -16,7 +16,7 @@ namespace PersonDataInFourYears
             }
             set
             {
-                name = value.Substring(0, 1).ToUpper() + value.Substring(1, value.Length - 1);
+                name = value.Substring(0, 1).ToUpper() + value.Substring(1, value.Length - 1).ToLower();
             }
         }
         public int Age { get; set; }
