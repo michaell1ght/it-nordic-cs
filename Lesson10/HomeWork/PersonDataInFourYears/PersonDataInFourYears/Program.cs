@@ -19,26 +19,17 @@ namespace PersonDataInFourYears
             for (int i =0; i<personArray.Length;i++)
             {
                 Console.WriteLine($"Enter name {i + 1}:");
-                personArray[i].Name = Console.ReadLine().ToLower();
-                if(InputDataValidator.IsLetter(personArray[i].Name) == true)
-                {
+                personArray[i].Name = Console.ReadLine();
+                if(!InputDataValidator.IsLetter(personArray[i].Name))
+                {   
+                    throw new ArgumentOutOfRangeException();
+                }
                     Console.WriteLine($"Enter age {i + 1}:");
                     personArray[i].Age = Int32.Parse(Console.ReadLine());
-                    if (InputDataValidator.IsCorrectAge(personArray[i].Age) == true)
+                    if (!InputDataValidator.IsCorrectAge(personArray[i].Age) == true)
                     {
-
+                        throw new ArgumentOutOfRangeException();
                     }
-
-                    else
-                    {
-                    throw new ArgumentOutOfRangeException();
-                    }
-                }
-
-                else
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
             }
 
             foreach (Person person in personArray)
