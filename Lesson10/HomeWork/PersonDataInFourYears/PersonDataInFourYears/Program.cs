@@ -20,7 +20,7 @@ namespace PersonDataInFourYears
             {
                 Console.WriteLine($"Enter name {i + 1}:");
                 personArray[i].Name = Console.ReadLine();
-                if(!InputDataValidator.IsLetter(personArray[i].Name))
+                if (!InputDataValidator.IsLetter(personArray[i].Name))
                 {   
                     throw new ArgumentOutOfRangeException();
                 }

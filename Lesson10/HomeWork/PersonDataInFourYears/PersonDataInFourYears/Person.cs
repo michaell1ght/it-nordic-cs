@@ -16,9 +16,14 @@ namespace PersonDataInFourYears
             }
             set
             {
+                if (value == null)
+                {
+                    throw new ArgumentNullException();
+                }
                 name = value.Substring(0, 1).ToUpper() + value.Substring(1, value.Length - 1).ToLower();
             }
         }
+
         public int Age { get; set; }
         public int AgeInFourYears
         {
