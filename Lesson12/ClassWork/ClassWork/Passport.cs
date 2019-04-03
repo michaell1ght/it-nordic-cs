@@ -25,7 +25,7 @@ namespace ClassExtentions
 			}
 		}
 
-		new public void ChangeIssueDate (DateTimeOffset newIssueDate)
+		public void ChangeIssueDate (DateTimeOffset newIssueDate)
 		{
 			IssueDate = newIssueDate;
 		}
