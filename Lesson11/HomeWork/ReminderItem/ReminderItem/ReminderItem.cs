@@ -15,14 +15,7 @@ namespace ReminderItem
             AlarmDate = alarmDate;
             AlarmMessage = alarmMessage;
             TimeToAlarm = DateTime.Now - AlarmDate;
-            if (TimeToAlarm >= TimeSpan.Zero)
-            {
-                IsOutdated = true;
-            }
-            else
-            {
-                IsOutdated = false;
-            }
+            IsOutdated = TimeToAlarm >= TimeSpan.Zero;
         }
 
         public void WriteProperties()
