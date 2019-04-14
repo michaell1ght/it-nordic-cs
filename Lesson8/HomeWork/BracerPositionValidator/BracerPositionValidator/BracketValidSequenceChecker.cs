@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 public class BracketValidSequenceChecker
 {
-    char openRoundBracer = '(';
-    char openSquareBracer = '[';
-    char closeRoundBracer = ')';
-    char closeSquareBracer = ']';
+    private static char openRoundBracer = '(';
+    private static char openSquareBracer = '[';
+    private static char closeRoundBracer = ')';
+    private static char closeSquareBracer = ']';
 
     private char[] BracketArray;
 
