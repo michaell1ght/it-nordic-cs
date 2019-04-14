@@ -1,39 +1,63 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-namespace BracketPositionValidator
+public class BracketValidSequenceChecker
 {
-    class BracketValidSequenceChecker
+    char openRoundBracer = '(';
+    char openSquareBracer = '[';
+    char closeRoundBracer = ')';
+    char closeSquareBracer = ']';
+
+    private char[] BracketArray;
+
+    public BracketValidSequenceChecker(string inputBracketString)
     {
-        char openRoundBracer = '(';
-        char openSquareBracer = '[';
-        char closeRoundBracer = ')';
-        char closeSquareBracer = ']';
-
-        private char[] CharArray;
-        Stack<char> bracerStack = new Stack<char>();
-
-        public BracketValidSequenceChecker(char[] charArray)
+        if (String.IsNullOrEmpty(inputBracketString))
         {
-            CharArray = charArray;
+            throw new ArgumentNullException();
         }
-
-        public bool BracketIsValidSequenceCheck()
+        else
         {
-            for (int i = 0; i < CharArray.Length; i++)
-            {
-                if (CharArray[i] == openRoundBracer || CharArray[i] == openSquareBracer)
-                {
-                    bracerStack.Push(CharArray[i]);
-                }
+            BracketArray = inputBracketString.ToCharArray();
+        }
+    }
 
-                if (bracerStack.Count == 0 || 
-                    (bracerStack.Peek() == openRoundBracer && CharArray[i] != closeRoundBracer) ||
-                    (bracerStack.Peek() == openSquareBracer && CharArray[i] != closeSquareBracer))
+    public bool BracketIsValidSequenceCheck()
+    {
+        Stack<char> bracketStack = new Stack<char>();
+        foreach (char currentBracket in BracketArray)
+        {
+            // Если открывающая скобка - записываем символ скобки в стек
+            if (currentBracket == openRoundBracer || currentBracket == openSquareBracer)
+            {
+                bracketStack.Push(currentBracket);
+            }
+
+            // Если закрывающа скобка
+            if (currentBracket == closeSquareBracer || currentBracket == closeRoundBracer)
+            {
+                // если стек не пуст
+                if (bracketStack.Count > 0)
                 {
+                    char lastSymbol = bracketStack.Peek(); // символ из вершины стека
+
+                    // закрывающая скобка должна быть такого же типа как последняя открывающая
+                    // иначе в стеке останется символ
+                    if (currentBracket == closeSquareBracer && lastSymbol == openSquareBracer || 
+                        currentBracket == closeRoundBracer && lastSymbol == openRoundBracer)
+                    {
+                        bracketStack.Pop();
+                    }
+                }
+                else
+                {
+                    // Встретили закрывающую скобку, но не было открывающей
                     return false;
                 }
             }
-            return true;
         }
+
+        // Если стек не пустой, значит порядок скобок был нарушен
+        return bracketStack.Count == 0;
     }
 }
