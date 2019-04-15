@@ -6,8 +6,6 @@ namespace BracketPositionValidator
     {
         public static void Main(string[] args)
         {
-            string errorMessage = "incorrect brackets";
-
             Console.WriteLine("Input a string of round or square bracers to check if all the bracers are closed");
             string inputString = Console.ReadLine();
 
@@ -15,7 +13,7 @@ namespace BracketPositionValidator
 
             if (!bracketChecker.BracketIsValidSequenceCheck())
             {
-                throw new ArgumentOutOfRangeException(errorMessage);
+                throw new ArgumentOutOfRangeException("incorrect brackets");
             }
 
             Console.WriteLine("Brackets are correct");

@@ -1,63 +1,68 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class BracketValidSequenceChecker
+namespace BracketPositionValidator
 {
-    private static char openRoundBracer = '(';
-    private static char openSquareBracer = '[';
-    private static char closeRoundBracer = ')';
-    private static char closeSquareBracer = ']';
-
-    private char[] BracketArray;
-
-    public BracketValidSequenceChecker(string inputBracketString)
+    public class BracketValidSequenceChecker
     {
-        if (String.IsNullOrEmpty(inputBracketString))
+        private static char openRoundBracer = '(';
+        private static char openSquareBracer = '[';
+        private static char closeRoundBracer = ')';
+        private static char closeSquareBracer = ']';
+
+        char[] validBracketArray = new char[]
         {
-            throw new ArgumentNullException();
-        }
-        else
+        openRoundBracer,
+        openSquareBracer,
+        closeRoundBracer,
+        closeSquareBracer
+        };
+
+        private char[] BracketArray;
+
+        public BracketValidSequenceChecker(string inputBracketString)
         {
+            if (!(inputBracketString.Contains(openRoundBracer) &&
+            inputBracketString.Contains(openSquareBracer) &&
+            inputBracketString.Contains(closeRoundBracer) &&
+            inputBracketString.Contains(closeSquareBracer)))
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
             BracketArray = inputBracketString.ToCharArray();
         }
-    }
 
-    public bool BracketIsValidSequenceCheck()
-    {
-        Stack<char> bracketStack = new Stack<char>();
-        foreach (char currentBracket in BracketArray)
+        public bool BracketIsValidSequenceCheck()
         {
-            // Если открывающая скобка - записываем символ скобки в стек
-            if (currentBracket == openRoundBracer || currentBracket == openSquareBracer)
+            Stack<char> bracketStack = new Stack<char>();
+            foreach (char currentBracket in BracketArray)
             {
-                bracketStack.Push(currentBracket);
-            }
-
-            // Если закрывающа скобка
-            if (currentBracket == closeSquareBracer || currentBracket == closeRoundBracer)
-            {
-                // если стек не пуст
-                if (bracketStack.Count > 0)
+                if (currentBracket == openRoundBracer || currentBracket == openSquareBracer)
                 {
-                    char lastSymbol = bracketStack.Peek(); // символ из вершины стека
+                    bracketStack.Push(currentBracket);
+                }
 
-                    // закрывающая скобка должна быть такого же типа как последняя открывающая
-                    // иначе в стеке останется символ
-                    if (currentBracket == closeSquareBracer && lastSymbol == openSquareBracer || 
-                        currentBracket == closeRoundBracer && lastSymbol == openRoundBracer)
+                if (currentBracket == closeSquareBracer || currentBracket == closeRoundBracer)
+                {
+                    if (bracketStack.Count > 0)
                     {
-                        bracketStack.Pop();
+                        char lastSymbol = bracketStack.Peek(); // символ из вершины стека
+
+                        if (currentBracket == closeSquareBracer && lastSymbol == openSquareBracer ||
+                            currentBracket == closeRoundBracer && lastSymbol == openRoundBracer)
+                        {
+                            bracketStack.Pop();
+                        }
+                    }
+                    else
+                    {
+                        return false;
                     }
                 }
-                else
-                {
-                    // Встретили закрывающую скобку, но не было открывающей
-                    return false;
-                }
             }
-        }
 
-        // Если стек не пустой, значит порядок скобок был нарушен
-        return bracketStack.Count == 0;
+            return bracketStack.Count == 0;
+        }
     }
 }
