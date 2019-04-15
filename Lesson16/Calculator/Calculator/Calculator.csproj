@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\calculator.Figure\Calculator.Figure.csproj" />
+    <ProjectReference Include="..\Calculator.operation\Calculator.Operation.csproj" />
+  </ItemGroup>
+
+</Project>
