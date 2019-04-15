@@ -10,21 +10,13 @@ namespace BracketPositionValidator
         private static char closeRoundBracer = ')';
         private static char closeSquareBracer = ']';
 
-        char[] validBracketArray = new char[]
-        {
-        openRoundBracer,
-        openSquareBracer,
-        closeRoundBracer,
-        closeSquareBracer
-        };
-
         private char[] BracketArray;
 
         public BracketValidSequenceChecker(string inputBracketString)
         {
-            if (!(inputBracketString.Contains(openRoundBracer) &&
-            inputBracketString.Contains(openSquareBracer) &&
-            inputBracketString.Contains(closeRoundBracer) &&
+            if (!(inputBracketString.Contains(openRoundBracer) ||
+            inputBracketString.Contains(openSquareBracer) ||
+            inputBracketString.Contains(closeRoundBracer) ||
             inputBracketString.Contains(closeSquareBracer)))
             {
                 throw new ArgumentOutOfRangeException();
@@ -47,7 +39,7 @@ namespace BracketPositionValidator
                 {
                     if (bracketStack.Count > 0)
                     {
-                        char lastSymbol = bracketStack.Peek(); // символ из вершины стека
+                        char lastSymbol = bracketStack.Peek();
 
                         if (currentBracket == closeSquareBracer && lastSymbol == openSquareBracer ||
                             currentBracket == closeRoundBracer && lastSymbol == openRoundBracer)

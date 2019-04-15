@@ -6,6 +6,7 @@ namespace BracketPositionValidator
     {
         public static void Main(string[] args)
         {
+            BracketCheckByExample.doCheck();
             Console.WriteLine("Input a string of round or square bracers to check if all the bracers are closed");
             string inputString = Console.ReadLine();
 
