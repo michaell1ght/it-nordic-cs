@@ -33,18 +33,19 @@ namespace BracketPositionValidator
                 if (currentBracket == openRoundBracer || currentBracket == openSquareBracer)
                 {
                     bracketStack.Push(currentBracket);
+                    continue;
                 }
 
                 if (currentBracket == closeSquareBracer || currentBracket == closeRoundBracer)
                 {
                     if (bracketStack.Count > 0)
                     {
-                        char lastSymbol = bracketStack.Peek();
+                        char lastSymbol = bracketStack.Pop();
 
-                        if (currentBracket == closeSquareBracer && lastSymbol == openSquareBracer ||
-                            currentBracket == closeRoundBracer && lastSymbol == openRoundBracer)
+                        if (!(currentBracket == closeSquareBracer && lastSymbol == openSquareBracer ||
+                            currentBracket == closeRoundBracer && lastSymbol == openRoundBracer))
                         {
-                            bracketStack.Pop();
+                            return false;
                         }
                     }
                     else
