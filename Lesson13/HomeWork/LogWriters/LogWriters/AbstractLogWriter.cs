@@ -6,7 +6,7 @@ namespace LogWriters
     {
         protected DateTimeOffset EventDateTime;
         protected string _logRecord;
-        protected string const separator = "    ";
+        protected const string separator = "    ";
 
         //        DateTimeOffset EventTs;
         //        YYYY-MM-DDTHH:MM:SS+0000 <tab> MessageType<tab> Message
