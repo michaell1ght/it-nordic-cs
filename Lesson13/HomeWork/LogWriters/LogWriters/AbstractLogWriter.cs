@@ -8,9 +8,6 @@ namespace LogWriters
         protected string _logRecord;
         protected const string separator = "    ";
 
-        //        DateTimeOffset EventTs;
-        //        YYYY-MM-DDTHH:MM:SS+0000 <tab> MessageType<tab> Message
-        //, где MessageType может быть “Info”, “Warning” или “Error”.
         public virtual void LogInfo(string message)
         {
             _logRecord = this.writeDateTimeAsString() + separator + MessageType.Info + separator + writeMessage(message);
