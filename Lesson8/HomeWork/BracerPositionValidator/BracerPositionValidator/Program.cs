@@ -5,19 +5,24 @@ namespace BracketPositionValidator
     class Program
     {
         public static void Main(string[] args)
-        {
-            BracketCheckByExample.doCheck();
+        {   
+            string successMessage = " - brackets are correct";
+            string failMessage = " - brackets are not correct";
+
+            BracketCheckByExample exampleCheck = new BracketCheckByExample();
+            exampleCheck.doBracketCheck(successMessage , failMessage);
+
             Console.WriteLine("Input a string of round or square bracers to check if all the bracers are closed");
             string inputString = Console.ReadLine();
 
-            BracketValidSequenceChecker bracketChecker = new BracketValidSequenceChecker(inputString);
+            BracketValidSequenceChecker bracketChecker = new BracketValidSequenceChecker();
 
-            if (!bracketChecker.BracketIsValidSequenceCheck())
+            if (!bracketChecker.BracketIsValidSequenceCheck(inputString))
             {
-                throw new ArgumentOutOfRangeException("incorrect brackets");
+                throw new ArgumentOutOfRangeException(inputString + failMessage);
             }
 
-            Console.WriteLine("Brackets are correct");
+            Console.WriteLine(inputString + successMessage);
             Console.ReadKey();
         }
     }

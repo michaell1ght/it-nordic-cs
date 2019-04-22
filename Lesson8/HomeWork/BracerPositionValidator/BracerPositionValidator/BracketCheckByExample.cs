@@ -4,9 +4,9 @@ using System.Text;
 
 namespace BracketPositionValidator
 {
-    public static class BracketCheckByExample
+    public class BracketCheckByExample
     {
-        public static void doCheck()
+        public void doBracketCheck(string successMessage, string failMessage)
             {
             string bracketString1 = "()";
             string bracketString2 = "[]()";
@@ -17,14 +17,14 @@ namespace BracketPositionValidator
             string bracketString7 = "[(])";
             string bracketString8 = "(()[]]";
 
-            BracketValidSequenceChecker bracketChecker1 = new BracketValidSequenceChecker(bracketString1);
-            BracketValidSequenceChecker bracketChecker2 = new BracketValidSequenceChecker(bracketString2);
-            BracketValidSequenceChecker bracketChecker3 = new BracketValidSequenceChecker(bracketString3);
-            BracketValidSequenceChecker bracketChecker4 = new BracketValidSequenceChecker(bracketString4);
-            BracketValidSequenceChecker bracketChecker5 = new BracketValidSequenceChecker(bracketString5);
-            BracketValidSequenceChecker bracketChecker6 = new BracketValidSequenceChecker(bracketString6);
-            BracketValidSequenceChecker bracketChecker7 = new BracketValidSequenceChecker(bracketString7);
-            BracketValidSequenceChecker bracketChecker8 = new BracketValidSequenceChecker(bracketString8);
+            BracketValidSequenceChecker bracketChecker1 = new BracketValidSequenceChecker();
+            BracketValidSequenceChecker bracketChecker2 = new BracketValidSequenceChecker();
+            BracketValidSequenceChecker bracketChecker3 = new BracketValidSequenceChecker();
+            BracketValidSequenceChecker bracketChecker4 = new BracketValidSequenceChecker();
+            BracketValidSequenceChecker bracketChecker5 = new BracketValidSequenceChecker();
+            BracketValidSequenceChecker bracketChecker6 = new BracketValidSequenceChecker();
+            BracketValidSequenceChecker bracketChecker7 = new BracketValidSequenceChecker();
+            BracketValidSequenceChecker bracketChecker8 = new BracketValidSequenceChecker();
 
             string[] bracketStringArray = new string[]
             {
@@ -50,18 +50,18 @@ namespace BracketPositionValidator
                 bracketChecker8
             };
 
-            Console.WriteLine("This programm do check the bracket string with the logic, shown in the examples below");
+            Console.WriteLine("This programm do check the bracket string balance with the logic, shown in the examples below");
 
             for (int i =0; i < bracketCheckerArray.Length; i++)
             {
-                if (!bracketCheckerArray[i].BracketIsValidSequenceCheck())
+                if (!bracketCheckerArray[i].BracketIsValidSequenceCheck(bracketStringArray[i]))
                 {
-                    Console.WriteLine($"Brackets in {bracketStringArray[i]} are not correct");
+                    Console.WriteLine(bracketStringArray[i] + failMessage);
                     Console.WriteLine();
                 }
                 else
                 {
-                    Console.WriteLine($"Brackets in {bracketStringArray[i]} are correct");
+                    Console.WriteLine(bracketStringArray[i] + successMessage);
                     Console.WriteLine();
                 }
             }

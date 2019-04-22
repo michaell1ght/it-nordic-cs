@@ -5,52 +5,45 @@ namespace BracketPositionValidator
 {
     public class BracketValidSequenceChecker
     {
-        private static char openRoundBracer = '(';
-        private static char openSquareBracer = '[';
-        private static char closeRoundBracer = ')';
-        private static char closeSquareBracer = ']';
+        const char openRoundBracket = '(';
+        const char openSquareBracket = '[';
+        const char closeRoundBracket = ')';
+        const char closeSquareBracket = ']';
 
-        private char[] BracketArray;
+        private string _bracketString;
 
-        public BracketValidSequenceChecker(string inputBracketString)
+        public bool BracketIsValidSequenceCheck(string inputBracketString)
         {
-            if (!(inputBracketString.Contains(openRoundBracer) ||
-            inputBracketString.Contains(openSquareBracer) ||
-            inputBracketString.Contains(closeRoundBracer) ||
-            inputBracketString.Contains(closeSquareBracer)))
+            if (!(inputBracketString.Contains(openRoundBracket) 
+                || inputBracketString.Contains(openSquareBracket) 
+                || inputBracketString.Contains(closeRoundBracket) 
+                || inputBracketString.Contains(closeSquareBracket)))
             {
                 throw new ArgumentOutOfRangeException();
             }
 
-            BracketArray = inputBracketString.ToCharArray();
-        }
-
-        public bool BracketIsValidSequenceCheck()
-        {
+            _bracketString = inputBracketString;
             Stack<char> bracketStack = new Stack<char>();
-            foreach (char currentBracket in BracketArray)
+
+            foreach (char currentBracket in _bracketString.ToCharArray())
             {
-                if (currentBracket == openRoundBracer || currentBracket == openSquareBracer)
+                if (currentBracket == openRoundBracket || currentBracket == openSquareBracket)
                 {
                     bracketStack.Push(currentBracket);
                     continue;
                 }
 
-                if (currentBracket == closeSquareBracer || currentBracket == closeRoundBracer)
+                if (currentBracket == closeSquareBracket || currentBracket == closeRoundBracket)
                 {
                     if (bracketStack.Count > 0)
                     {
-                        char lastSymbol = bracketStack.Pop();
+                        char lastCheckedBracket = bracketStack.Pop();
 
-                        if (!(currentBracket == closeSquareBracer && lastSymbol == openSquareBracer ||
-                            currentBracket == closeRoundBracer && lastSymbol == openRoundBracer))
+                        if (!(lastCheckedBracket == openSquareBracket && currentBracket == closeSquareBracket
+                            || lastCheckedBracket == openRoundBracket && currentBracket == closeRoundBracket))
                         {
                             return false;
                         }
-                    }
-                    else
-                    {
-                        return false;
                     }
                 }
             }
