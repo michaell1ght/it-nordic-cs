@@ -4,7 +4,6 @@ namespace LogWriters
 {
     public abstract class AbstractLogWriter : ILogWriter
     {
-        protected DateTimeOffset EventDateTime;
         protected string _logRecord;
         protected const string separator = "    ";
 
