@@ -2,25 +2,23 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReminderItemExtention
+namespace ChatBot
 {
-    class ReminderItem
+    class AlarmModel
     {
+        Guid _alarmId;
         DateTimeOffset AlarmDate;
         string AlarmMessage;
         TimeSpan TimeToAlarm;
         public bool IsOutdated { get; private set; }
-        public ReminderItem (DateTimeOffset alarmDate, string alarmMessage)
+
+        public AlarmModel(DateTimeOffset alarmDate, string alarmMessage)
         {
+            _alarmId =Guid.NewGuid();
             AlarmDate = alarmDate;
             AlarmMessage = alarmMessage;
             TimeToAlarm = DateTime.Now - AlarmDate;
             IsOutdated = TimeToAlarm >= TimeSpan.Zero;
-        }
-
-        public virtual void WriteProperties(Type type)
-        {
-            Console.WriteLine($"Class: {type}\n AlarmDate : {AlarmDate}\n AlarmMessage : {AlarmMessage}\n TimeToAlarm : {TimeToAlarm}\n IsOutdated : {IsOutdated}\n");
         }
     }
 }
