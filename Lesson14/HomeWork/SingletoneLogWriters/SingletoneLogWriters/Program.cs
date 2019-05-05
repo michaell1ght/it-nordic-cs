@@ -30,7 +30,8 @@ namespace LogWriters
                 oneMoreFileWriter
             };
 
-            ILogWriter multipleLogWriter = SingletoneMultipleLogWriter.GetMultipleLogWriterInstance(LogWriterList);
+            ILogWriter multipleLogWriter = SingletoneMultipleLogWriter.GetMultipleLogWriterInstance();
+            SingletoneMultipleLogWriter.GetMultipleLogWriterInstance().LogWriterList = LogWriterList;
             multipleLogWriter.LogWarning(warningText + stringSeparator + multipleLogWriter.GetType());
             multipleLogWriter.LogError(errorText + stringSeparator + multipleLogWriter.GetType()) ;
             multipleLogWriter.LogInfo(infoText + stringSeparator + multipleLogWriter.GetType());

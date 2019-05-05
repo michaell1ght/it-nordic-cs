@@ -6,30 +6,28 @@ namespace LogWriters
 {
     class SingletoneMultipleLogWriter : AbstractLogWriter, ILogWriter
     {
-        private List<ILogWriter> LogWriterList { get; set; }
+        public List<ILogWriter> LogWriterList { get; set; }
 
         private static SingletoneMultipleLogWriter multipleLogWriterInstance;
 
-        private SingletoneMultipleLogWriter(List<ILogWriter> logWriterList)
+        private SingletoneMultipleLogWriter()
         { }
 
-        public static SingletoneMultipleLogWriter GetMultipleLogWriterInstance(List<ILogWriter> LogWriterList)
+        public static SingletoneMultipleLogWriter GetMultipleLogWriterInstance()
         {
-            if (LogWriterList.Count == 0)
-            {
-                throw new ArgumentNullException();
-            }
             if (multipleLogWriterInstance == null)
             {
-                multipleLogWriterInstance = new SingletoneMultipleLogWriter(LogWriterList);
-                multipleLogWriterInstance.LogWriterList= LogWriterList;
+                multipleLogWriterInstance = new SingletoneMultipleLogWriter();
             }
             return multipleLogWriterInstance;
         }
-
         public override void LogInfo(string message)
         {
-            foreach(var WriterItem in multipleLogWriterInstance.LogWriterList)
+            if(LogWriterList==null)
+            {
+                throw new ArgumentOutOfRangeException("The list of log writers is empty");
+            }
+            foreach(var WriterItem in LogWriterList)
             {
                 WriterItem.LogInfo(message);
             }
@@ -37,7 +35,11 @@ namespace LogWriters
 
         public override void LogError(string message)
         {
-            foreach (var WriterItem in multipleLogWriterInstance.LogWriterList)
+            if (LogWriterList == null)
+            {
+                throw new ArgumentOutOfRangeException("The list of log writers is empty");
+            }
+            foreach (var WriterItem in LogWriterList)
             {
                 WriterItem.LogError(message);
             }
@@ -45,7 +47,11 @@ namespace LogWriters
 
         public override void LogWarning(string message)
         {
-            foreach (var WriterItem in multipleLogWriterInstance.LogWriterList)
+            if (LogWriterList == null)
+            {
+                throw new ArgumentOutOfRangeException("The list of log writers is empty");
+            }
+            foreach (var WriterItem in LogWriterList)
             {
                 WriterItem.LogWarning(message);
             }

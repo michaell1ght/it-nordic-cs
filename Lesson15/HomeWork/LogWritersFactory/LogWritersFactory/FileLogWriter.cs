@@ -3,18 +3,23 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace LogWriters
+namespace LogWritersFactory
 {
     class FileLogWriter : AbstractLogWriter, ILogWriter
     {
-        string FilePath { get; set; } = @"C:\Logs\";
-        string FileName { get; set; } = "logs.txt";
+        string FilePath = @"D:\Logs\";
+        string FileName = $"log_{DateTime.Now}";
         FileManager fileManager;
+
+        public FileLogWriter(string fileName)
+        {
+            FileName = fileName;
+        }
 
         public override void LogInfo(string message)
         {
             base.LogInfo(message);
-            fileManager = new FileManager(base._logRecord, FilePath,FileName);
+            fileManager = new FileManager(base._logRecord, FilePath, FileName);
             fileManager.UpdateFileInFolder();
         }
 

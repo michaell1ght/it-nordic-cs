@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace LogWriters
+namespace LogWritersFactory
 {
     public class ConsoleLogWriter : AbstractLogWriter, ILogWriter
     {

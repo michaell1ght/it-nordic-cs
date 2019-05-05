@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LogWriters
+namespace LogWritersFactory
 {
-    interface ILogWriter
+    public interface ILogWriter
     {
         void LogInfo(string message);
         void LogWarning(string message);

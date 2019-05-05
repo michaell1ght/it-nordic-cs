@@ -2,26 +2,51 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LogWriters
+namespace LogWritersFactory
 {
-    static class LogWriterFactory
+    public class LogWriterFactory
     {
-        public static ILogWriter GetLogWriter(LogWriterType writetType, List<ILogWriter> LogWriterList=null)
+        private static LogWriterFactory logWriterFactoryInstance;
+
+        private LogWriterFactory()
+        { }
+
+        public static LogWriterFactory GetLogWriterFactoryInstance()
         {
-            switch (writetType)
+            if (logWriterFactoryInstance == null)
             {
-                case LogWriterType.ConsoleLogWriter:
-                    ILogWriter consoleLogWriterInstence = new ConsoleLogWriter();
-                    return consoleLogWriterInstence;
-                case LogWriterType.FileLogWriter:
-                    ILogWriter fileLogWriterInstence = new FileLogWriter();
-                    return fileLogWriterInstence;
-                case LogWriterType.MultipleLogWriter:
-                    ILogWriter multipleLogWriterInstance = new MultipleLogWriter(LogWriterList);
-                    return multipleLogWriterInstance;
-                default:
-                    throw new InvalidOperationException();
+                logWriterFactoryInstance = new LogWriterFactory();
             }
+            return logWriterFactoryInstance;
+        }
+        
+
+        public ILogWriter GetLogWriter<T>(object parameters) where T : ILogWriter
+        {
+            if (typeof(T) == typeof(ConsoleLogWriter))
+            {
+                return new ConsoleLogWriter();
+            }
+            else if (typeof(T) == typeof(FileLogWriter))
+            {
+                if (!(parameters is string))
+                {
+                    throw new ArgumentOutOfRangeException("parameter filepath is not set");
+                }
+
+                return new FileLogWriter((string)parameters);
+            }
+            else if (typeof(T) == typeof(MultipleLogWriter))
+            {
+                if (!(parameters is List<ILogWriter>))
+                {
+                    throw new ArgumentOutOfRangeException("parameter log writers list is not set");
+                }
+
+                return new MultipleLogWriter(parameters as List<ILogWriter>);
+            }
+
+            return null;
         }
     }
 }

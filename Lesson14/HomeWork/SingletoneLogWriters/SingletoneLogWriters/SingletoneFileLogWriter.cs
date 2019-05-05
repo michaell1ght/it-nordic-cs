@@ -7,8 +7,8 @@ namespace LogWriters
 {
     class SingletoneFileLogWriter : AbstractLogWriter, ILogWriter
     {
-        string FilePath { get; set; } = @"C:\Logs\";
-        string FileName { get; set; } = "logs.txt";
+        private string FilePath { get; set; } = @"D:\Logs\";
+        private string FileName { get; set; } = "logs.txt";
         private FileManager fileManager;
         private static SingletoneFileLogWriter fileLogWriterInstance;
 
@@ -27,7 +27,7 @@ namespace LogWriters
         public override void LogInfo(string message)
         {
             base.LogInfo(message);
-            fileManager = new FileManager(base._logRecord, FilePath,FileName);
+            fileManager = new FileManager(base._logRecord, FilePath, FileName);
             fileManager.UpdateFileInFolder();
         }
 

@@ -1,4 +1,4 @@
-﻿namespace LogWriters
+﻿namespace LogWritersFactory
 {
     enum MessageType
     {
