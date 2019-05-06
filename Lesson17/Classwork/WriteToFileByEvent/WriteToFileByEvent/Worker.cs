@@ -20,7 +20,7 @@ namespace Classwork
 
 		public void DoWork(int hours, WorkType workType)
 		{
-			for (int i = 0; i <= hours; i++)
+			for (int i = 0; i < hours; i++)
 			{
 				OnWorkPerform(i + 1, workType);
 			}

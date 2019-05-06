@@ -4,40 +4,43 @@ using System.Text;
 
 namespace RNGArchieved
 {
-	public delegate void RandomDataGeneratedHandler(int bytesDone, int totalBytes);
-
-	public event RandomDataGeneratedHandler RandomDataGenerated;
-
-	public event EventHandler RandomDataGenerationDone;
-
-
 	class RandomDataGenerator
 	{
-		public byte[] GetRandomData(int dataSize, int bytesDoneToRaiseEvent)
+        public delegate void RandomDataGeneratedHandler(int bytesDone, int totalBytes);
+
+        public event RandomDataGeneratedHandler RandomDataGeneratig;
+
+        public event EventHandler RandomDataGenerationDone;
+
+        public byte[] GetRandomData(int dataSize, int bytesDoneToRaiseEvent)
 		{
-			byte[] randomDataArray = new byte[dataSize];
+            var counter = bytesDoneToRaiseEvent;
+            byte[] randomDataArray = new byte[dataSize];
 			Random rng = new Random();
-			for (int i = 0; i <= byte.MaxValue; i++)
+
+			for (int i = 0; i < dataSize; i++)
 			{
 				randomDataArray[i]= (byte)rng.Next(255);
-				if (i + 1 % bytesDoneToRaiseEvent == 0)
+				if ((i + 1) % counter == 0)
 				{
-					OnRandomDataGenerated(i + 1, dataSize);
-				}
+                    OnRandomDataGeneratig(counter, dataSize);
+                    counter += bytesDoneToRaiseEvent;
+                }
 			}
-			//Call event + final event
-			OnRandomDataGenerationDone(s);
 
+            counter = dataSize;
+            OnRandomDataGeneratig(counter, dataSize);
+            OnRandomDataGenerationDone(this, EventArgs.Empty);
 			return randomDataArray;
 		}
-		protected virtual void OnRandomDataGenerated(object sender s, EventArgs e)
+		protected virtual void OnRandomDataGeneratig(int bytesDone, int totalBytes)
 		{
-		
-		}
+            RandomDataGeneratig?.Invoke(bytesDone, totalBytes);
+        }
 
-		protected virtual void OnRandomDataGenerationDone(object sender s, EventArgs e)
+        protected virtual void OnRandomDataGenerationDone(object sender, EventArgs e)
 		{
-		
-		}
-	}
+            RandomDataGenerationDone?.Invoke(sender,e);
+        }
+    }
 }

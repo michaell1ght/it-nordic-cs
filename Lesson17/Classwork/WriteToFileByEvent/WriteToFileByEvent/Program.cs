@@ -7,9 +7,10 @@ namespace Classwork
 		static void Main(string[] args)
 		{
 			var worker = new Worker();
-
-			worker.WorkPerformed += Worker_WorkPerformed;
-			worker.WorkCompleted += Worker2_WorkCompleted;
+            //подписываемся на событие "ещё в работе"
+            worker.WorkPerformed += Worker_WorkPerformed;
+            //подписываемся на событие "работа выполнена"
+            worker.WorkCompleted += Worker2_WorkCompleted;
 
 			worker.DoWork(5, WorkType.Work);
 			Console.ReadKey();
@@ -22,7 +23,7 @@ namespace Classwork
 
 		private static void Worker_WorkPerformed(int hours, WorkType workType)
 		{
-			Console.WriteLine($"Work of type {workType}: {hours} hours");
+			Console.WriteLine($"Work lasts: {hours} hours");
 		}
 
 		//	WorkPerformedEventHandler delegate1 = WorkPerformed1;

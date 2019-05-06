@@ -6,29 +6,22 @@ namespace RNGArchieved
 	{
 		static void Main(string[] args)
 		{
-			RandomDataGenerator rdg = new RandomDataGenerator();
-			rdg.GetRandomData(100, 10);
+			RandomDataGenerator randomDataGenerator = new RandomDataGenerator();
+            randomDataGenerator.RandomDataGeneratig += RandomDataGenerator_RandomDataGeneratig;
+            randomDataGenerator.RandomDataGenerationDone += RandomDataGenerator_RandomDataGenerationDone;
+            randomDataGenerator.GetRandomData(107, 10);
 			// положить результат GetRandomData в файл.
 		}
-	}
+
+        private static void RandomDataGenerator_RandomDataGeneratig(int bytesDone, int totalBytes)
+        {
+            Console.WriteLine($"work in progress {bytesDone} parts of {totalBytes} done ");
+        }
+
+        private static void RandomDataGenerator_RandomDataGenerationDone(object sender, EventArgs e)
+        {
+            Console.WriteLine("work is done");
+        }
+    }
 }
-
-	//var worker = new Worker();
-
-	//		worker.WorkPerformed += Worker_WorkPerformed;
-	//		worker.WorkCompleted += Worker2_WorkCompleted;
-
-	//		worker.DoWork(5, WorkType.Work);
-	//		Console.ReadKey();
-	//	}
-
-	//private static void Worker2_WorkCompleted(object sender, EventArgs e)
-	//{
-	//	Console.WriteLine($"Work is done : {sender.GetHashCode()}");
-	//}
-
-	//private static void Worker_WorkPerformed(int hours, WorkType workType)
-	//{
-	//	Console.WriteLine($"Work of type {workType}: {hours} hours");
-	//}
 
