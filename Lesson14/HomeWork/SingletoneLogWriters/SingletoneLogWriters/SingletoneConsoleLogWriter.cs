@@ -1,5 +1,5 @@
-﻿using System;
-
+﻿using SingletoneLogWriters;
+using System;
 
 namespace LogWriters
 {
@@ -21,20 +21,22 @@ namespace LogWriters
 
         public override void LogInfo(string message)
         {
-            base.LogInfo(message);
-            Console.WriteLine(base._logRecord);
+            LogRecord(message, LogRecordType.Info);
         }
 
         public override void LogError(string message)
         {
-            base.LogError(message);
-            Console.WriteLine(base._logRecord);
+            LogRecord(message, LogRecordType.Error);
         }
 
         public override void LogWarning(string message)
         {
-            base.LogWarning(message);
-            Console.WriteLine(base._logRecord);
+            LogRecord(message, LogRecordType.Warning);
+        }
+
+        protected override void LogRecord(string message, LogRecordType logRecordType)
+        {
+            Console.WriteLine(LogRecordGenerator.GenerateLogRecord(message, logRecordType));
         }
     }
 }

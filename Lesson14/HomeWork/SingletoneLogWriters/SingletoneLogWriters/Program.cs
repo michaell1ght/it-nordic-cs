@@ -12,14 +12,14 @@ namespace LogWriters
             string stringSeparator = " ";
 
             ILogWriter consoleLogWriter = SingletoneConsoleLogWriter.GetConsoleLogWriterInstance();
-            consoleLogWriter.LogWarning(warningText + stringSeparator + consoleLogWriter.GetType());
-            consoleLogWriter.LogError(errorText + stringSeparator + consoleLogWriter.GetType());
-            consoleLogWriter.LogInfo(infoText + stringSeparator + consoleLogWriter.GetType());
+            consoleLogWriter.LogWarning(warningText + stringSeparator + nameof(consoleLogWriter));
+            consoleLogWriter.LogError(errorText + stringSeparator + nameof(consoleLogWriter));
+            consoleLogWriter.LogInfo(infoText + stringSeparator + nameof(consoleLogWriter));
 
             ILogWriter fileLogWriter = SingletoneFileLogWriter.GetFileLogWriterInstance();
-            fileLogWriter.LogWarning(warningText + stringSeparator + fileLogWriter.GetType());
-            fileLogWriter.LogError(errorText + stringSeparator + fileLogWriter.GetType());
-            fileLogWriter.LogInfo(infoText + stringSeparator + fileLogWriter.GetType());
+            fileLogWriter.LogWarning(warningText + stringSeparator + nameof(fileLogWriter));
+            fileLogWriter.LogError(errorText + stringSeparator + nameof(fileLogWriter));
+            fileLogWriter.LogInfo(infoText + stringSeparator + nameof(fileLogWriter));
 
             ILogWriter oneMoreConsoleWriter = SingletoneConsoleLogWriter.GetConsoleLogWriterInstance();
             ILogWriter oneMoreFileWriter = SingletoneFileLogWriter.GetFileLogWriterInstance();
@@ -32,9 +32,9 @@ namespace LogWriters
 
             ILogWriter multipleLogWriter = SingletoneMultipleLogWriter.GetMultipleLogWriterInstance();
             SingletoneMultipleLogWriter.GetMultipleLogWriterInstance().LogWriterList = LogWriterList;
-            multipleLogWriter.LogWarning(warningText + stringSeparator + multipleLogWriter.GetType());
-            multipleLogWriter.LogError(errorText + stringSeparator + multipleLogWriter.GetType()) ;
-            multipleLogWriter.LogInfo(infoText + stringSeparator + multipleLogWriter.GetType());
+            multipleLogWriter.LogWarning(warningText + stringSeparator + nameof(multipleLogWriter));
+            multipleLogWriter.LogError(errorText + stringSeparator + nameof(multipleLogWriter)) ;
+            multipleLogWriter.LogInfo(infoText + stringSeparator + nameof(multipleLogWriter));
             System.Console.ReadKey();
         }
     }

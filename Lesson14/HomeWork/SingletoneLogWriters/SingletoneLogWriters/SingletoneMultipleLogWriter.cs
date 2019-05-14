@@ -27,9 +27,9 @@ namespace LogWriters
             {
                 throw new ArgumentOutOfRangeException("The list of log writers is empty");
             }
-            foreach(var WriterItem in LogWriterList)
+            foreach(var logWriterItem in LogWriterList)
             {
-                WriterItem.LogInfo(message);
+                logWriterItem.LogInfo(message);
             }
         }
 
@@ -39,9 +39,9 @@ namespace LogWriters
             {
                 throw new ArgumentOutOfRangeException("The list of log writers is empty");
             }
-            foreach (var WriterItem in LogWriterList)
+            foreach (var logWriterItem in LogWriterList)
             {
-                WriterItem.LogError(message);
+                logWriterItem.LogError(message);
             }
         }
 
@@ -51,10 +51,15 @@ namespace LogWriters
             {
                 throw new ArgumentOutOfRangeException("The list of log writers is empty");
             }
-            foreach (var WriterItem in LogWriterList)
+            foreach (var logWriterItem in LogWriterList)
             {
-                WriterItem.LogWarning(message);
+                logWriterItem.LogWarning(message);
             }
+        }
+
+        protected override void LogRecord(string message, LogRecordType logRecordType)
+        {
+            throw new NotImplementedException();
         }
     }
 }

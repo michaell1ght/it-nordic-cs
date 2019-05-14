@@ -1,6 +1,6 @@
 ﻿namespace LogWriters
 {
-    enum MessageType
+    public enum LogRecordType
     {
         Info,
         Warning,

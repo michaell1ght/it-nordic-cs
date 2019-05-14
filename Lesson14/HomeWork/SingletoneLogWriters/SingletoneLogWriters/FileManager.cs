@@ -19,7 +19,8 @@ namespace LogWriters
         }
         public void UpdateFileInFolder()
         {
-            this.CreateFIleOrFolderNotExist();
+            CreateFolderIfNotExist();
+            CreateFileIfNotExist();
             using (var writer = new StreamWriter(_filePath + _fileName, true,Encoding.UTF8))
                 {
                 writer.WriteLine(_text);
@@ -27,15 +28,18 @@ namespace LogWriters
                 }
             }
 
-        private void CreateFIleOrFolderNotExist()
+        private void CreateFolderIfNotExist()
         {
-            if (!Directory.Exists(this._filePath))
+            if (!Directory.Exists(_filePath))
             {
-                Directory.CreateDirectory(this._filePath);
+                Directory.CreateDirectory(_filePath);
             }
+        }
+        private void CreateFileIfNotExist()
+        {
             if (!File.Exists(_filePath + _fileName))
             {
-                File.Create(_filePath + _fileName);
+                using (File.Create(_fileName));
             }
         }
     }
