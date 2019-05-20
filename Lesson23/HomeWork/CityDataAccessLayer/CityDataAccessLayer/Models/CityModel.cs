@@ -1,12 +1,10 @@
-﻿using APIValidation.Validation;
-using System.ComponentModel.DataAnnotations;
-
-namespace APIValidation.Models
+﻿using System.ComponentModel.DataAnnotations;
+namespace APIValidation.DataLayer
 {
-	public class CityGetModel
-	{
+    public class CityModel
+    {
         [Required]
-		public int Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(100, ErrorMessage = "The name of a city shouldn't be longer than 100 characters")]

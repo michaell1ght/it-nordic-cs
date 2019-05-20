@@ -45,7 +45,7 @@ namespace APIValidation.Controllers
 		}
 
 		[HttpPost()]
-		public IActionResult AddCity([FromBody] CityCreateModel city)
+		public IActionResult AddCity([FromBody] CityUpdateModel city)
 		{
 			if(city==null)
 			{
@@ -76,5 +76,45 @@ namespace APIValidation.Controllers
 				new { id=newCityId }
 				,newCity);
 		}
-	}
+
+        [HttpPut("{id}", Name = "GetCity")]
+        public IActionResult UpdateCity([FromBody] CityUpdateModel cityForUpdate, int id)
+        {
+            foreach (var city in _citiesDataStore.Cities)
+            {
+                if (id == city.Id)
+                {
+
+                        if (!IsPropertyEqualChecher.isPropertyEqualCheck(city.Name, cityForUpdate.Name))
+                        {
+                            city.Name = cityForUpdate.Name;
+                        }
+                        if (!IsPropertyEqualChecher.isPropertyEqualCheck(city.Description, cityForUpdate.Description))
+                        {
+                            city.Description = cityForUpdate.Description;
+                        }
+                        if (!IsPropertyEqualChecher.isPropertyEqualCheck(city.NumberOfPointsInterest, cityForUpdate.NumberOfPointsInterest))
+                        {
+                            city.NumberOfPointsInterest = cityForUpdate.NumberOfPointsInterest;
+                        }
+                }
+            }
+
+            return Ok(cityForUpdate);
+        }
+
+        [HttpDelete("{id}", Name = "DeleteCity")]
+        public IActionResult DeleteCity(int id)
+        {
+            if (_citiesDataStore.Cities.Exists(x => x.Id == id))
+            {
+                _citiesDataStore.Cities.Remove(_citiesDataStore.Cities.Find(x => x.Id == id));
+            }
+            else
+            {
+                return NotFound($"Object city with id = {id} not found");
+            }
+            return Ok();
+        }
+    }
 }

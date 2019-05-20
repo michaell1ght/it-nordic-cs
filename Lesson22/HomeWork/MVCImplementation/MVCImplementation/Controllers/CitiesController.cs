@@ -61,31 +61,34 @@ namespace MVCImplementation.Controllers
                 , newCity);
         }
 
-        [HttpPut()]
-        public IActionResult ReplaceCity([FromBody] CityGetModel cityForUpdate)
+        [HttpPut("{id}", Name = "GetCity")]
+        public IActionResult UpdateCity([FromBody] CityUpdateModel cityForUpdate, int id)
         {
-            //Добавить проверку на то, что все передаваемые поля не null. Вынести эту логику в модель.
-            if (cityForUpdate == null)
-            {
-                return BadRequest();
-            }
             var citiesDataStore = CitiesDataStore.GetCityDataStoreInstance();
             foreach (var city in citiesDataStore.Cities)
             {
-                if (cityForUpdate.Id == city.Id)
+                if (id == city.Id)
                 {
-                    if (cityForUpdate == city)
+
+                    if (city.Name == null)
                     {
-                        return BadRequest();
+                        return BadRequest($"Property {nameof(city.Name) } can not have a null value");
                     }
 
-                    //Добавить логику, чтобы поля были не null, если значение не передано. Подумать, как этто сделать линками.
                     else
                     {
-                        city.Id = cityForUpdate.Id;
-                        city.Name = cityForUpdate.Name;
-                        city.Description = cityForUpdate.Description;
-                        city.NumberOfPointsInterest = cityForUpdate.NumberOfPointsInterest;
+                        if (!IsPropertyEqualChecher.isPropertyEqualCheck(city.Name, cityForUpdate.Name))
+                        {
+                            city.Name = cityForUpdate.Name;
+                        }
+                        if(!IsPropertyEqualChecher.isPropertyEqualCheck(city.Description, cityForUpdate.Description))
+                        {
+                            city.Description = cityForUpdate.Description;
+                        }
+                        if (!IsPropertyEqualChecher.isPropertyEqualCheck(city.NumberOfPointsInterest, cityForUpdate.NumberOfPointsInterest))
+                        {
+                            city.NumberOfPointsInterest = cityForUpdate.NumberOfPointsInterest;
+                        }
                     }
                 }
             }
@@ -96,7 +99,6 @@ namespace MVCImplementation.Controllers
         [HttpDelete("{id}", Name = "DeleteCity")]
         public IActionResult DeleteCity(int id)
         {
-            //Подумать, как получше переписать удаление (Костыль с Find внутри Remove)
             var citiesDataStore = CitiesDataStore.GetCityDataStoreInstance();
             if (citiesDataStore.Cities.Exists(x => x.Id == id))
             {
@@ -104,7 +106,7 @@ namespace MVCImplementation.Controllers
             }
             else
             {
-                return NotFound($"City with id = {id} not found");
+                return NotFound($"Object city with id = {id} not found");
             }
             return Ok();
         }

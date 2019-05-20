@@ -49,11 +49,11 @@ namespace APIValidation
 			{
 				c.SwaggerEndpoint("/swagger/v1/swagger.json", "Cities API V1");
 			});
-			//app.UseMvc(config =>
-			//config.MapRoute(
-			//	name: "Default",
-			//	template: "{controller}/{action}/{id?}",
-			//	defaults: new { controller = "Cities", action = "GetCities" }));
-		}
+            app.UseMvc(config =>
+            config.MapRoute(
+                name: "Default",
+                template: "{controller}/{action}/{id?}",
+                defaults: new { controller = "Cities", action = "GetCities" }));
+        }
 	}
 }
