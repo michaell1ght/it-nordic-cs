@@ -82,6 +82,10 @@ namespace APIValidation.Controllers
         {
             foreach (var city in _citiesDataStore.Cities)
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
                 if (id == city.Id)
                 {
 
