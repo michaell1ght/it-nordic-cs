@@ -3,14 +3,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace APIValidation.Models
 {
-	public class CityCreateModel
+	public class CityUpdateModel
 	{
 		[Required]
 		[MaxLength(100, ErrorMessage = "The name of a city shouldn't be longer than 100 characters")]
-		public string Name  { get; set; }
+        [MinLength(1, ErrorMessage = "The name of a city shouldn't be empty")]
+        public string Name { get; set; }
 
 		[MaxLength(255, ErrorMessage = "Description shouldn't be longer than 255 characters")]
-		[DifferentValue(OtherProperty = "Name")]
+        [MinLength(1, ErrorMessage = "The name of a city shouldn't be empty")]
 		public string Description { get; set; }
 
 		[Range(0,100)]
