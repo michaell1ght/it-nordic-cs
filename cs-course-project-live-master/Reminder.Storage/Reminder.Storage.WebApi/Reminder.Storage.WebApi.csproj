@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Reminder.Storage.Core\Reminder.Storage.Core.csproj" />
+    <ProjectReference Include="..\Reminder.Storage.InMemory\Reminder.Storage.InMemory.csproj" />
+    <ProjectReference Include="..\Reminder.Storage.WebApi.Core\Reminder.Storage.WebApi.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
+</Project>

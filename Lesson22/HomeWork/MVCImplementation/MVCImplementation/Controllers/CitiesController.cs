@@ -77,15 +77,15 @@ namespace MVCImplementation.Controllers
 
                     else
                     {
-                        if (!IsPropertyEqualChecher.isPropertyEqualCheck(city.Name, cityForUpdate.Name))
+                        if (city.Name != cityForUpdate.Name)
                         {
                             city.Name = cityForUpdate.Name;
                         }
-                        if(!IsPropertyEqualChecher.isPropertyEqualCheck(city.Description, cityForUpdate.Description))
+                        if(city.Description!= cityForUpdate.Description)
                         {
                             city.Description = cityForUpdate.Description;
                         }
-                        if (!IsPropertyEqualChecher.isPropertyEqualCheck(city.NumberOfPointsInterest, cityForUpdate.NumberOfPointsInterest))
+                        if (city.NumberOfPointsInterest != cityForUpdate.NumberOfPointsInterest)
                         {
                             city.NumberOfPointsInterest = cityForUpdate.NumberOfPointsInterest;
                         }

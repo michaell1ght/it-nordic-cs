@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HttpToSocks5Proxy" Version="1.1.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Reminder.Storage\Reminder.Storage.WebApi.Client\Reminder.Storage.WebApi.Client.csproj" />
+    <ProjectReference Include="..\Reminder.Domain\Reminder.Domain.csproj" />
+    <ProjectReference Include="..\Reminder.Receiver.Telegram\Reminder.Receiver.Telegram.csproj" />
+    <ProjectReference Include="..\Reminder.Sender.Telegram\Reminder.Sender.Telegram.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

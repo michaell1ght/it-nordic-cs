@@ -1,0 +1,1 @@
+dotnet Reminder.Storage\Reminder.Storage.WebApi\bin\Debug\netcoreapp2.2\Reminder.Storage.WebApi.dll
