@@ -70,36 +70,10 @@ namespace Reminder.Storage.Sql
         
         public List<ReminderItem> Get(int count = 0, int startPostion = 0)
 		{
-            using (var sqlConnection = GetOpenedSqlConnection())
-            {
-                var cmd = sqlConnection.CreateCommand();
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "dbo.GetReminderItemListByLimitAndOffset";
-
-                cmd.Parameters.AddWithValue("@count", count);
-                cmd.Parameters.AddWithValue("@startPostion", startPostion);
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if (!reader.HasRows || !reader.Read())
-                    {
-                        return null;
-                    }
-
-                    var resultList = new List<ReminderItem>();
-                    foreach (var result in resultList)
-                    {
-                        result.Id = reader.GetGuid(reader.GetOrdinal("Id"));
-                        result.ContactId = reader.GetString(reader.GetOrdinal("ContactId"));
-                        result.Date = reader.GetDateTimeOffset(reader.GetOrdinal("TargetDate"));
-                        result.Message = reader.GetString(reader.GetOrdinal("Message"));
-                        result.Status = (ReminderItemStatus)reader.GetByte(reader.GetOrdinal("StatusId"));
-                    }
-                    return resultList;
-                }
-            }
+            throw new NotImplementedException();
         }
 
-		public List<ReminderItem> Get(ReminderItemStatus status, int count, int startPostion)
+        public List<ReminderItem> Get(ReminderItemStatus status, int count, int startPostion)
 		{
 			throw new NotImplementedException();
 		}
@@ -159,11 +133,21 @@ namespace Reminder.Storage.Sql
 		}
 
 		public void UpdateStatus(Guid id, ReminderItemStatus status)
-		{
-			throw new NotImplementedException();
-		}
+        {
+                using (var sqlConnection = GetOpenedSqlConnection())
+                {
+                    var cmd = sqlConnection.CreateCommand();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "dbo.AddReminderItem";
 
-		private SqlConnection GetOpenedSqlConnection()
+                    cmd.Parameters.AddWithValue("@reminderId", id);
+                    cmd.Parameters.AddWithValue("@statusId", status);
+
+                    cmd.ExecuteNonQuery();
+                }
+        }
+
+        private SqlConnection GetOpenedSqlConnection()
 		{
 			var sqlConnection = new SqlConnection(_connectionString);
 			sqlConnection.Open();

@@ -114,16 +114,5 @@ namespace Reminder.Storage.Sql.Tests
 
             Assert.AreEqual(3, actual.Count);
         }
-
-        [TestMethod]
-        public void Method_Get_By_Status_255_Returns_Empty_List()
-        {
-            var storage = new SqlReminderStorage(_connectionString);
-
-            var actual = storage.Get((ReminderItemStatus)255);
-
-            Assert.IsNotNull(actual);
-            Assert.AreEqual(0, actual.Count);
-        }
     }
 }

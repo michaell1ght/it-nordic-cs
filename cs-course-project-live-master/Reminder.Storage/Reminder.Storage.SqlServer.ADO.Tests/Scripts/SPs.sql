@@ -68,3 +68,18 @@ AS BEGIN
 	WHERE StatusId = @statusId
 END
 GO
+
+GO
+DROP PROCEDURE IF EXISTS [dbo].[UpdateReminderItemStatusById]
+GO
+CREATE PROCEDURE dbo.UpdateReminderItemStatusById(
+	@reminderId AS UNIQUEIDENTIFIER,
+	@statusId AS INT
+)
+AS BEGIN
+	UPDATE dbo.ReminderItem
+		SET StatusId = @statusId,
+			UpdatedDate = SYSDATETIMEOFFSET()
+	WHERE Id= @reminderId
+END
+GO
