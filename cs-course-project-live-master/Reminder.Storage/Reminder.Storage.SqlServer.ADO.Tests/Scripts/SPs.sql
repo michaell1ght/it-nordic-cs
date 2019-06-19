@@ -38,6 +38,7 @@ AS BEGIN
 	SET @reminderId = @tempReminderId
 END
 GO
+
 DROP PROCEDURE IF EXISTS [dbo].[GetReminderItemById]
 GO
 CREATE PROCEDURE dbo.GetReminderItemById(
@@ -53,6 +54,7 @@ AS BEGIN
 	WHERE Id = @reminderId
 END
 GO
+
 DROP PROCEDURE IF EXISTS [dbo].[GetReminderItemListByStatus]
 GO
 CREATE PROCEDURE dbo.GetReminderItemListByStatus(
@@ -69,7 +71,6 @@ AS BEGIN
 END
 GO
 
-GO
 DROP PROCEDURE IF EXISTS [dbo].[UpdateReminderItemStatusById]
 GO
 CREATE PROCEDURE dbo.UpdateReminderItemStatusById(
@@ -81,5 +82,43 @@ AS BEGIN
 		SET StatusId = @statusId,
 			UpdatedDate = SYSDATETIMEOFFSET()
 	WHERE Id= @reminderId
+END
+GO
+
+DROP PROCEDURE if EXISTS [dbo].[GetReminderItemsCount]
+GO
+CREATE PROCEDURE [dbo].[GetReminderItemsCount]
+AS BEGIN
+
+	SELECT COUNT(*) 
+	FROM [dbo].[ReminderItem]
+END
+GO
+
+DROP PROCEDURE IF EXISTS [dbo].[RemoveReminderItem]
+GO
+CREATE PROCEDURE [dbo].[RemoveReminderItem](
+	@reminderId AS UNIQUEIDENTIFIER)
+AS BEGIN
+	SET NOCOUNT ON
+
+	DELETE FROM [dbo].[ReminderItem]
+	WHERE Id= @reminderId
+	
+	SELECT CAST(@@ROWCOUNT AS BIT)
+END
+GO
+
+DROP PROCEDURE IF EXISTS dbo.UpdateReninderItemsBulk
+GO
+CREATE PROCEDURE dbo.UpdateReninderItemsBulk(
+	@statusId as TINYINT)
+AS BEGIN
+UPDATE R
+	SET R.StatusId = @statusId,
+		R.UpdatedDate = SYSDATETIMEOFFSET()
+	FROM dbo.ReminderItem AS R
+	INNER JOIN #ReminderItem AS T
+		ON T.Id= R.Id
 END
 GO

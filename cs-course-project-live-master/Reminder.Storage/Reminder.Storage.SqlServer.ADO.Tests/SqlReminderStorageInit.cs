@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Reminder.Storage.SqlServer.ADO.Tests.Properties;
 
-namespace Reminder.Storage.Sql.Tests
+namespace Reminder.Storage.SqlServer.ADO.Tests
 {
 	public class SqlReminderStorageInit
 	{

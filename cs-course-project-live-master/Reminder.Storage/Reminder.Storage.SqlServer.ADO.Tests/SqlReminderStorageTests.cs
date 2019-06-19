@@ -4,36 +4,36 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Reminder.Storage.Core;
 
-namespace Reminder.Storage.Sql.Tests
+namespace Reminder.Storage.SqlServer.ADO.Tests
 {
-	[TestClass]
-	public class SqlReminderStorageTests
-	{
-		private const string _connectionString =
-            @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ReminderTest;Integrated Security=true;";
+    [TestClass]
+    public class SqlReminderStorageTests
+    {
+        private const string _connectionString =
+             @"Data Source=localhost\SQLEXPRESS;Initial Catalog=ReminderTest;Integrated Security=true;";
 
-		[TestInitialize]
-		public void TestInitialize()
-		{
-			var dbInit = new SqlReminderStorageInit(_connectionString);
-			dbInit.InitializeDatabase();
-		}
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            var dbInit = new SqlReminderStorageInit(_connectionString);
+            dbInit.InitializeDatabase();
+        }
 
-		[TestMethod]
-		public void Method_Add_Returns_Not_Empty_Guid()
-		{
-			var storage = new SqlReminderStorage(_connectionString);
+        [TestMethod]
+        public void Method_Add_Returns_Not_Empty_Guid()
+        {
+            var storage = new SqlReminderStorage(_connectionString);
 
-			Guid actual = storage.Add(new ReminderItemRestricted
+            Guid actual = storage.Add(new ReminderItemRestricted
             {
-				ContactId = "TestContactId",
-				Date = DateTimeOffset.Now.AddHours(1),
-				Message = "Test Message",
-				Status = Core.ReminderItemStatus.Awaiting
-			});
+                ContactId = "TestContactId",
+                Date = DateTimeOffset.Now.AddHours(1),
+                Message = "Test Message",
+                Status = Core.ReminderItemStatus.Awaiting
+            });
 
-			Assert.AreNotEqual(Guid.Empty, actual);
-		}
+            Assert.AreNotEqual(Guid.Empty, actual);
+        }
 
         [TestMethod]
         public void Method_Get_By_Id_Method_Returns_Just_Added_Item()
@@ -113,6 +113,33 @@ namespace Reminder.Storage.Sql.Tests
             var actual = storage.Get(ReminderItemStatus.Failed);
 
             Assert.AreEqual(3, actual.Count);
+        }
+
+        [TestMethod]
+        public void Property_Count_Returns_8_For_Initial_Data_Set()
+        {
+            var storage = new SqlReminderStorage(_connectionString);
+
+            int actual = storage.Count;
+            Assert.AreEqual(8, actual);
+        }
+
+        [TestMethod]
+        public void Remove_Method_Returns_False_When_Item_Not_Found()
+        {
+        var storage = new SqlReminderStorage(_connectionString);
+
+        bool actual = storage.Remove(Guid.Empty);
+        Assert.IsFalse(actual);
+        }
+
+        [TestMethod]
+        public void Remove_Method_Returns_True_When_Item_Found()
+        {
+            var storage = new SqlReminderStorage(_connectionString);
+
+            bool actual = storage.Remove(new Guid("00000000 - 0000 - 0000 - 0000 - 111111111111"));
+            Assert.IsTrue(actual);
         }
     }
 }
