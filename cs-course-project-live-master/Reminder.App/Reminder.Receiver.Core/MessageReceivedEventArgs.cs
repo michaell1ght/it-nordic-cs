@@ -4,9 +4,9 @@ namespace Reminder.Receiver.Core
 {
 	public class MessageReceivedEventArgs: EventArgs
 	{
-		public string Message { get; set; }
+		public string Message { get; private set; }
 
-		public string ContactId { get; set; }
+		public string ContactId { get; private set; }
 
 		public MessageReceivedEventArgs(string contactId, string message)
 		{
