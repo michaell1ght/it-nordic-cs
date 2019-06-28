@@ -32,6 +32,4 @@ GO
 ALTER TABLE dbo.ReminderItem
 ADD CONSTRAINT FK_ReminderItem_StatusId FOREIGN KEY (StatusId)
 	REFERENCES dbo.ReminderSendStatus(Id)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE
 GO
