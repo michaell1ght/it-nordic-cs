@@ -19,7 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reminder.Storage.WebApi.Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reminder.Storage.SqlServer.ADO", "Reminder.Storage.SqlServer.ADO\Reminder.Storage.SqlServer.ADO.csproj", "{372847BA-49EF-4CBA-B94B-EE687F0D223E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reminder.Storage.SqlServer.ADO.Tests", "Reminder.Storage.SqlServer.ADO.Tests\Reminder.Storage.SqlServer.ADO.Tests.csproj", "{454BBA78-37BC-4713-A304-00619FA1B1E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reminder.Storage.SqlServer.ADO.Tests", "Reminder.Storage.SqlServer.ADO.Tests\Reminder.Storage.SqlServer.ADO.Tests.csproj", "{454BBA78-37BC-4713-A304-00619FA1B1E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reminder.Storage.SqlServer.EF", "Reminder.Storage.SqlServer.EF\Reminder.Storage.SqlServer.EF.csproj", "{71D24CDB-992B-4072-B83D-729FDE6B6177}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reminder.Storage.SqlServer.EF.DbInit", "Reminder.Storage.SqlServer.EF.DbInit\Reminder.Storage.SqlServer.EF.DbInit.csproj", "{7E8DF79D-D6FC-4FCA-A893-5D7E0F450AD7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +67,14 @@ Global
 		{454BBA78-37BC-4713-A304-00619FA1B1E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{454BBA78-37BC-4713-A304-00619FA1B1E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{454BBA78-37BC-4713-A304-00619FA1B1E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71D24CDB-992B-4072-B83D-729FDE6B6177}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71D24CDB-992B-4072-B83D-729FDE6B6177}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71D24CDB-992B-4072-B83D-729FDE6B6177}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71D24CDB-992B-4072-B83D-729FDE6B6177}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E8DF79D-D6FC-4FCA-A893-5D7E0F450AD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E8DF79D-D6FC-4FCA-A893-5D7E0F450AD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E8DF79D-D6FC-4FCA-A893-5D7E0F450AD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E8DF79D-D6FC-4FCA-A893-5D7E0F450AD7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

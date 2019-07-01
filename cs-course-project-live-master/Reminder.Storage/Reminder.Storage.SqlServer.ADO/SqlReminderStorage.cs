@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using Reminder.Storage.Core;
 
-namespace Reminder.Storage.SqlServer.ADO
+namespace Reminder.Storage.Sql
 {
 	public class SqlReminderStorage : IReminderStorage
 	{
@@ -15,20 +15,19 @@ namespace Reminder.Storage.SqlServer.ADO
 			_connectionString = connectionString;
 		}
 
-        public int Count
-        {
-            get
-            {
-                using (var sqlConnection = GetOpenedSqlConnection())
-                {
-                    var cmd = sqlConnection.CreateCommand();
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.CommandText = "dbo.GetReminderItemsCount";
-
-                    return (int)cmd.ExecuteScalar();
-                }
-            }
-        }
+		public int Count
+		{
+			get
+			{
+				using (var sqlConnection = GetOpenedSqlConnection())
+				{
+					var cmd = sqlConnection.CreateCommand();
+					cmd.CommandType = CommandType.StoredProcedure;
+					cmd.CommandText = "dbo.GetReminderItemsCount";
+					return (int)cmd.ExecuteScalar();
+				}
+			}
+		}
 
 		public Guid Add(ReminderItemRestricted reminder)
 		{
@@ -54,159 +53,232 @@ namespace Reminder.Storage.SqlServer.ADO
 		}
 
 		public ReminderItem Get(Guid id)
-        {
-            using (var sqlConnection = GetOpenedSqlConnection())
-            {
-                var cmd = sqlConnection.CreateCommand();
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "dbo.GetReminderItemById";
-
-                cmd.Parameters.AddWithValue("@reminderId", id);
-                using(SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if(!reader.HasRows || !reader.Read())
-                    {
-                        return null;
-                    }
-
-                    var result = new ReminderItem();
-                    result.Id = id;
-                    result.ContactId = reader.GetString(reader.GetOrdinal("ContactId"));
-                    result.Date = reader.GetDateTimeOffset(reader.GetOrdinal("TargetDate"));
-                    result.Message = reader.GetString(reader.GetOrdinal("Message"));
-                    result.Status = (ReminderItemStatus)reader.GetByte(reader.GetOrdinal("StatusId"));
-
-                    return result;
-                }
-            }
-        }
-        
-        public List<ReminderItem> Get(int count = 0, int startPostion = 0)
 		{
-            var result = new List<ReminderItem>();
-            result.AddRange(Get(ReminderItemStatus.Awaiting));
-            result.AddRange(Get(ReminderItemStatus.Ready));
-            result.AddRange(Get(ReminderItemStatus.Sent));
-            result.AddRange(Get(ReminderItemStatus.Failed));
-            return result;
-        }
+			using (var sqlConnection = GetOpenedSqlConnection())
+			{
+				var cmd = sqlConnection.CreateCommand();
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.CommandText = "dbo.GetReminderItemById";
 
-        public List<ReminderItem> Get(ReminderItemStatus status, int count, int startPostion)
+				cmd.Parameters.AddWithValue("@reminderId", id);
+
+				using (SqlDataReader reader = cmd.ExecuteReader())
+				{
+					if (!reader.HasRows || !reader.Read())
+						return null;
+
+					int idColumnIndex = reader.GetOrdinal("Id");
+					int contactIdColumnIndex = reader.GetOrdinal("ContactId");
+					int dateColumntIndex = reader.GetOrdinal("TargetDate");
+					int messageColumntIndex = reader.GetOrdinal("Message");
+					int statusIdColumntIndex = reader.GetOrdinal("StatusId");
+
+					var result = new ReminderItem();
+					result.Id = reader.GetGuid(idColumnIndex);
+					result.ContactId = reader.GetString(contactIdColumnIndex);
+					result.Date = reader.GetDateTimeOffset(dateColumntIndex);
+					result.Message = reader.GetString(messageColumntIndex);
+					result.Status = (ReminderItemStatus)reader.GetByte(statusIdColumntIndex);
+
+					return result;
+				}
+			}
+		}
+
+		public List<ReminderItem> Get(int count = 0, int startPostion = 0)
 		{
-            return Get(status);
+			var result = new List<ReminderItem>();
+
+			using (var sqlConnection = GetOpenedSqlConnection())
+			{
+				var cmd = sqlConnection.CreateCommand();
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.CommandText = "dbo.GetReminderItemsWithPaging";
+
+				cmd.Parameters.AddWithValue("@startPosition", startPostion);
+				if (count > 0)
+					cmd.Parameters.AddWithValue("@count", count);
+
+				using (SqlDataReader reader = cmd.ExecuteReader())
+				{
+					if (!reader.HasRows)
+						return result;
+
+					int idColumnIndex = reader.GetOrdinal("Id");
+					int contactIdColumnIndex = reader.GetOrdinal("ContactId");
+					int dateColumntIndex = reader.GetOrdinal("TargetDate");
+					int messageColumntIndex = reader.GetOrdinal("Message");
+					int statusIdColumntIndex = reader.GetOrdinal("StatusId");
+
+					while (reader.Read())
+					{
+						var reminderItem = new ReminderItem();
+						reminderItem.Id = reader.GetGuid(idColumnIndex);
+						reminderItem.ContactId = reader.GetString(contactIdColumnIndex);
+						reminderItem.Date = reader.GetDateTimeOffset(dateColumntIndex);
+						reminderItem.Message = reader.GetString(messageColumntIndex);
+						reminderItem.Status = (ReminderItemStatus)reader.GetByte(statusIdColumntIndex);
+						result.Add(reminderItem);
+					}
+					return result;
+				}
+			}
+		}
+
+		public List<ReminderItem> Get(ReminderItemStatus status, int count, int startPostion)
+		{
+			var result = new List<ReminderItem>();
+
+			using (var sqlConnection = GetOpenedSqlConnection())
+			{
+				var cmd = sqlConnection.CreateCommand();
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.CommandText = "dbo.GetReminderItemsByStatusWithPaging";
+
+				cmd.Parameters.AddWithValue("@statusId", (byte)status);
+				cmd.Parameters.AddWithValue("@startPosition", startPostion);
+				if (count > 0)
+					cmd.Parameters.AddWithValue("@count", count);
+
+				using (SqlDataReader reader = cmd.ExecuteReader())
+				{
+					if (!reader.HasRows)
+						return result;
+
+					int idColumnIndex = reader.GetOrdinal("Id");
+					int contactIdColumnIndex = reader.GetOrdinal("ContactId");
+					int dateColumntIndex = reader.GetOrdinal("TargetDate");
+					int messageColumntIndex = reader.GetOrdinal("Message");
+					int statusIdColumntIndex = reader.GetOrdinal("StatusId");
+
+					while (reader.Read())
+					{
+						var reminderItem = new ReminderItem();
+						reminderItem.Id = reader.GetGuid(idColumnIndex);
+						reminderItem.ContactId = reader.GetString(contactIdColumnIndex);
+						reminderItem.Date = reader.GetDateTimeOffset(dateColumntIndex);
+						reminderItem.Message = reader.GetString(messageColumntIndex);
+						reminderItem.Status = (ReminderItemStatus)reader.GetByte(statusIdColumntIndex);
+						result.Add(reminderItem);
+					}
+					return result;
+				}
+			}
 		}
 
 		public List<ReminderItem> Get(ReminderItemStatus status)
 		{
-            var result = new List<ReminderItem>();
-            using (var sqlConnection = GetOpenedSqlConnection())
-            {
-                var cmd = sqlConnection.CreateCommand();
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "dbo.GetReminderItemListByStatus";
+			var result = new List<ReminderItem>();
 
-                cmd.Parameters.AddWithValue("@statusId", (byte)status);
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if (!reader.HasRows)
-                    {
-                        return result;
-                    }
+			using (var sqlConnection = GetOpenedSqlConnection())
+			{
+				var cmd = sqlConnection.CreateCommand();
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.CommandText = "dbo.GetReminderItemsByStatus";
 
-                    int idColumnIndex = reader.GetOrdinal("Id");
-                    int contactIdColumnIndex = reader.GetOrdinal("ContactId");
-                    int dateColumnIndex = reader.GetOrdinal("TargetDate");
-                    int messageColumnIndex = reader.GetOrdinal("Message");
-                    int statusColumnIndex = reader.GetOrdinal("StatusId");
+				cmd.Parameters.AddWithValue("@statusId", (byte)status);
 
+				using (SqlDataReader reader = cmd.ExecuteReader())
+				{
+					if (!reader.HasRows)
+						return result;
 
-                    while (reader.Read())
-                    {
+					int idColumnIndex = reader.GetOrdinal("Id");
+					int contactIdColumnIndex = reader.GetOrdinal("ContactId");
+					int dateColumntIndex = reader.GetOrdinal("TargetDate");
+					int messageColumntIndex = reader.GetOrdinal("Message");
+					int statusIdColumntIndex = reader.GetOrdinal("StatusId");
 
-                        var item = new ReminderItem
-                        {
-                            Id = reader.GetGuid(idColumnIndex),
-                            ContactId = reader.GetString(contactIdColumnIndex),
-                            Date = reader.GetDateTimeOffset(dateColumnIndex),
-                            Message = reader.GetString(messageColumnIndex),
-                            Status = (ReminderItemStatus)reader.GetByte(statusColumnIndex)
-                        };
+					while (reader.Read())
+					{
+						var reminderItem = new ReminderItem();
+						reminderItem.Id = reader.GetGuid(idColumnIndex);
+						reminderItem.ContactId = reader.GetString(contactIdColumnIndex);
+						reminderItem.Date = reader.GetDateTimeOffset(dateColumntIndex);
+						reminderItem.Message = reader.GetString(messageColumntIndex);
+						reminderItem.Status = (ReminderItemStatus)reader.GetByte(statusIdColumntIndex);
+						result.Add(reminderItem);
+					}
+					return result;
+				}
+			}
+		}
 
-                        result.Add(item);
-
-                    }
-                    return result;
-                }
-            }
-        }
-
-        public bool Remove(Guid id)
-        {
-            using (var sqlConnection = GetOpenedSqlConnection())
-            {
-                var cmd = sqlConnection.CreateCommand();
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "dbo.RemoveReminderItem";
-
-                cmd.Parameters.AddWithValue("@reminderId", id);
-
-            return (bool)cmd.ExecuteScalar();
-            }
-        }
-
-            public void UpdateStatus(IEnumerable<Guid> ids, ReminderItemStatus status)
+		public bool Remove(Guid id)
 		{
-            using (var sqlConnection = GetOpenedSqlConnection())
-            {
-                var cmd = sqlConnection.CreateCommand();
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "CREATE TABLE #ReminderItem([Id] UNIQUEIDNTIFIER NOT NULL)";
-                cmd.ExecuteNonQuery();
+			using (var sqlConnection = GetOpenedSqlConnection())
+			{
+				var cmd = sqlConnection.CreateCommand();
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.CommandText = "dbo.RemoveReminderItem";
 
-                using (SqlBulkCopy copy= new SqlBulkCopy(sqlConnection))
-                {
-                    copy.BatchSize = 1000;
-                    copy.DestinationTableName = "#ReminderItem";
+				cmd.Parameters.AddWithValue("@reminderId", id);
 
-                    DataTable tempTable = new DataTable("#ReminderItem");
-                    tempTable.Columns.Add("Id", typeof(Guid));
+				return (bool)cmd.ExecuteScalar();
+			}
+		}
 
-                    foreach(Guid id in ids)
-                    {
-                        DataRow row = tempTable.NewRow();
-                        row["Id"] = id;
-                        tempTable.Rows.Add(row);
-                    }
-                    copy.WriteToServer(tempTable);
-                }
+		public void UpdateStatus(IEnumerable<Guid> ids, ReminderItemStatus status)
+		{
+			using (var sqlConnection = GetOpenedSqlConnection())
+			{
+				var cmd = sqlConnection.CreateCommand();
 
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "UpdateReninderItemsBulk";
-                cmd.Parameters.AddWithValue("@statusId", (byte)status);
-                cmd.ExecuteNonQuery();
+				// create temp table
+				cmd.CommandType = CommandType.Text;
+				cmd.CommandText = "CREATE TABLE #ReminderItem([Id] UNIQUEIDENTIFIER NOT NULL)";
+				cmd.ExecuteNonQuery();
 
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "DROP TABLE #ReminderItem";
-                cmd.ExecuteNonQuery();
-            }
-        }
+				// fill it with ids
+				using (SqlBulkCopy copy = new SqlBulkCopy(sqlConnection))
+				{
+					copy.BatchSize = 1000;
+					copy.DestinationTableName = "#ReminderItem";
+
+					DataTable tempTable = new DataTable("#ReminderItem");
+					tempTable.Columns.Add("Id", typeof(Guid));
+
+					foreach (Guid id in ids)
+					{
+						DataRow row = tempTable.NewRow();
+						row["Id"] = id;
+						tempTable.Rows.Add(row);
+					}
+
+					copy.WriteToServer(tempTable);
+				}
+
+				// run query to bulk update
+
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.CommandText = "[dbo].[UpdateReminderItemsBulk]";
+
+				cmd.Parameters.AddWithValue("@statusId", (byte)status);
+				cmd.ExecuteNonQuery();
+
+				// drop temp table
+				cmd.CommandType = CommandType.Text;
+				cmd.CommandText = "DROP TABLE #ReminderItem";
+				cmd.ExecuteNonQuery();
+			}
+		}
 
 		public void UpdateStatus(Guid id, ReminderItemStatus status)
-        {
-                using (var sqlConnection = GetOpenedSqlConnection())
-                {
-                    var cmd = sqlConnection.CreateCommand();
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.CommandText = "dbo.AddReminderItem";
+		{
+			using (var sqlConnection = GetOpenedSqlConnection())
+			{
+				var cmd = sqlConnection.CreateCommand();
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.CommandText = "dbo.UpdateReminderItem";
 
-                    cmd.Parameters.AddWithValue("@reminderId", id);
-                    cmd.Parameters.AddWithValue("@statusId", status);
+				cmd.Parameters.AddWithValue("@reminderId", id);
+				cmd.Parameters.AddWithValue("@statusId", (byte)status);
 
-                    cmd.ExecuteNonQuery();
-                }
-        }
+				cmd.ExecuteNonQuery();
+			}
+		}
 
-        private SqlConnection GetOpenedSqlConnection()
+		private SqlConnection GetOpenedSqlConnection()
 		{
 			var sqlConnection = new SqlConnection(_connectionString);
 			sqlConnection.Open();
